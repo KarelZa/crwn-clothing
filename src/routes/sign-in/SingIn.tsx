@@ -8,6 +8,7 @@ const SingIn = (props: Props) => {
 		const { user } = await signInWithGooglePopup();
 		const userDocRef = await createUserDocFromAuth(user);
 	};
+
 	return (
 		<div>
 			<h1>SingIn Page</h1>
