@@ -1,8 +1,10 @@
+import { ThemeProvider } from '@mui/system';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './routes/home/Home';
 import Navigation from './routes/navigation/Navigation';
-import SingIn from './routes/sign-in/SingIn';
+import Authentication from './routes/authentication/Authentication';
+import { theme } from './styles/appTheme/theme';
 
 const Shop = () => {
 	return <div>Hello I am SHOP PAGE</div>;
@@ -10,13 +12,15 @@ const Shop = () => {
 
 function App() {
 	return (
-		<Routes>
-			<Route path='/' element={<Navigation />}>
-				<Route index element={<Home />} />
-				<Route path='/shop' element={<Shop />} />
-				<Route path='/sign-in' element={<SingIn />} />
-			</Route>
-		</Routes>
+		<ThemeProvider theme={theme}>
+			<Routes>
+				<Route path='/' element={<Navigation />}>
+					<Route index element={<Home />} />
+					<Route path='/shop' element={<Shop />} />
+					<Route path='/auth' element={<Authentication />} />
+				</Route>
+			</Routes>
+		</ThemeProvider>
 	);
 }
 

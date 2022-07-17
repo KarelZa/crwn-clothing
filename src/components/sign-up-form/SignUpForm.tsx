@@ -1,40 +1,98 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import {
+	createAuthUserWithEmailAndPassword,
+	createUserDocFromAuth,
+} from '../../utils/firebase/firebase';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import CustomInput from './CustomInput';
+import { StyledContainer } from '../../styles/sign-up-form/signUpContainer';
+import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
+import { StyledButton } from '../../styles/shared/button';
 
-interface SignUpFormProps {
-	displayName?: string;
-	email?: string;
-	password?: string;
-	comfirmPassword?: string;
+export interface SignUpFormProps {
+	displayName: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
 }
 
 // Rules
 const schema: yup.SchemaOf<SignUpFormProps> = yup.object({
-	displayName: yup.string().required().min(2),
+	displayName: yup
+		.string()
+		.required('Display Name is a required field')
+		.min(5, 'Display Name must be at least 5 characters'),
 	email: yup.string().required().email(),
-	password: yup.string().required(),
-	comfirmPassword: yup.string().required(),
+	password: yup.string().required().min(8),
+	confirmPassword: yup.string().required('Confirm Password is a required field'),
 });
 
 const SignUpForm = () => {
 	const { control, handleSubmit, reset } = useForm<SignUpFormProps>({
 		resolver: yupResolver(schema),
 	});
+
+	const formSubmitHandler = async (data: SignUpFormProps) => {
+		if (data.password !== data.confirmPassword) {
+			alert('❌ Passwords do not match !');
+			return;
+		}
+		try {
+			const { user } = await createAuthUserWithEmailAndPassword(data.email, data.password);
+			await createUserDocFromAuth(user, { displayName: data.displayName });
+			console.log(user);
+		} catch (error: any) {
+			if (error.code === 'auth/email-already-in-use') {
+				alert('Cannot create user, Email is already in use');
+			} else {
+				console.log('User creation encountered an error', error);
+			}
+		}
+		reset();
+	};
+
 	return (
-		<div>
-			<h1>Sign Up With your email & password</h1>
-			<form>
-				<TextField id='outlined-basic' label='Display Name' variant='outlined' />
-				<TextField id='outlined-basic' label='Email' variant='outlined' />
-				<Button variant='outlined' type='submit' color='primary' size='large'>
-					SEND MESSAGE
-				</Button>
-			</form>
-		</div>
+		<StyledContainer flexDir='column'>
+			<h2>Don't have an account?</h2>
+			<span>Sign Up With your email & password</span>
+			<StyledSignUpForm onSubmit={handleSubmit(formSubmitHandler)} flexDir='column'>
+				<CustomInput
+					name='displayName'
+					label='Display Name'
+					control={control}
+					defaultValue=''
+				/>
+				<CustomInput name='email' label='Email' control={control} defaultValue='' />
+				<CustomInput
+					name='password'
+					label='Password'
+					control={control}
+					defaultValue=''
+					inputType='password'
+				/>
+				<CustomInput
+					name='confirmPassword'
+					label='Confirm Password'
+					control={control}
+					defaultValue=''
+					inputType='password'
+				/>
+				<StyledButton
+					variant='contained'
+					type='submit'
+					size='large'
+					bgColor='black'
+					textColor='white'
+					bgHover='black'
+				>
+					Sign In
+				</StyledButton>
+			</StyledSignUpForm>
+		</StyledContainer>
 	);
 };
 
