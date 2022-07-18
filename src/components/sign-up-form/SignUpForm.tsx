@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import {
 	createAuthUserWithEmailAndPassword,
@@ -6,12 +6,11 @@ import {
 } from '../../utils/firebase/firebase';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import CustomInput from './CustomInput';
 import { StyledContainer } from '../../styles/sign-up-form/signUpContainer';
 import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
 import { StyledButton } from '../../styles/shared/button';
+import { UserContext } from '../../contexts/user';
 
 export interface SignUpFormProps {
 	displayName: string;
@@ -32,6 +31,7 @@ const schema: yup.SchemaOf<SignUpFormProps> = yup.object({
 });
 
 const SignUpForm = () => {
+	const { setCurrentUser } = useContext(UserContext);
 	const { control, handleSubmit, reset } = useForm<SignUpFormProps>({
 		resolver: yupResolver(schema),
 	});
@@ -41,8 +41,10 @@ const SignUpForm = () => {
 			alert('❌ Passwords do not match !');
 			return;
 		}
+		
 		try {
 			const { user } = await createAuthUserWithEmailAndPassword(data.email, data.password);
+			setCurrentUser(user);
 			await createUserDocFromAuth(user, { displayName: data.displayName });
 			console.log(user);
 		} catch (error: any) {

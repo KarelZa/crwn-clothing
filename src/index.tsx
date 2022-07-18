@@ -4,12 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { UserContextProvider } from './contexts/user';
+import { ThemeProvider } from '@mui/system';
+import { theme } from './styles/appTheme/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<App />
+			<ThemeProvider theme={theme}>
+				<UserContextProvider>
+					<App />
+				</UserContextProvider>
+			</ThemeProvider>
 		</BrowserRouter>
 	</React.StrictMode>
 );

@@ -7,10 +7,12 @@ import {
 	signInWithEmailAndPassword,
 	GoogleAuthProvider,
 	User as firebaseUser,
+	signOut,
 } from 'firebase/auth';
 // doc ==> to get document instance
 // getDoc,setDoc ==> to get / set doc data
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { UserContext } from '../../contexts/user';
 
 // Firebase web-app configuration
 const firebaseConfig = {
@@ -62,4 +64,8 @@ export const createAuthUserWithEmailAndPassword = async (email: string, password
 
 export const signInAuthUserWithEmailAndPassword = async (email: string, password: string) => {
 	return await signInWithEmailAndPassword(auth, email, password);
+};
+
+export const signOutCurrentUser = async () => {
+	return await signOut(auth);
 };
