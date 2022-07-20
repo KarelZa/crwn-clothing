@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +11,6 @@ import {
 	signInWithGooglePopup,
 } from '../../utils/firebase/firebase';
 import { StyledFlexContainer } from '../../styles/shared/flexContainer';
-import { UserContext } from '../../contexts/user';
 
 export interface SignInFormProps {
 	email: string;
@@ -26,21 +24,17 @@ const schema: yup.SchemaOf<SignInFormProps> = yup.object({
 });
 
 const SignInForm = () => {
-	const { setCurrentUser } = useContext(UserContext);
 	const { control, handleSubmit, reset } = useForm<SignInFormProps>({
 		resolver: yupResolver(schema),
 	});
 
 	const logGoogleUser = async () => {
-		const { user } = await signInWithGooglePopup();
-		const userDocRef = await createUserDocFromAuth(user);
+		await signInWithGooglePopup();
 	};
 
 	const formSubmitHandler = async (data: SignInFormProps) => {
 		try {
 			const { user } = await signInAuthUserWithEmailAndPassword(data.email, data.password);
-			setCurrentUser(user);
-			console.log(user);
 			reset();
 		} catch (error: any) {
 			if (error.code === 'auth/wrong-password') {
@@ -79,7 +73,6 @@ const SignInForm = () => {
 					</StyledButton>
 					<StyledButton
 						variant='contained'
-						type='submit'
 						size='large'
 						bgColor='#3581B8'
 						textColor='white'

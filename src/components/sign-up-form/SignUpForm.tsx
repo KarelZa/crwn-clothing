@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import {
 	createAuthUserWithEmailAndPassword,
@@ -10,7 +9,6 @@ import CustomInput from './CustomInput';
 import { StyledContainer } from '../../styles/sign-up-form/signUpContainer';
 import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
 import { StyledButton } from '../../styles/shared/button';
-import { UserContext } from '../../contexts/user';
 
 export interface SignUpFormProps {
 	displayName: string;
@@ -31,7 +29,6 @@ const schema: yup.SchemaOf<SignUpFormProps> = yup.object({
 });
 
 const SignUpForm = () => {
-	const { setCurrentUser } = useContext(UserContext);
 	const { control, handleSubmit, reset } = useForm<SignUpFormProps>({
 		resolver: yupResolver(schema),
 	});
@@ -41,12 +38,10 @@ const SignUpForm = () => {
 			alert('❌ Passwords do not match !');
 			return;
 		}
-		
+
 		try {
-			const { user } = await createAuthUserWithEmailAndPassword(data.email, data.password);
-			setCurrentUser(user);
-			await createUserDocFromAuth(user, { displayName: data.displayName });
-			console.log(user);
+			await createAuthUserWithEmailAndPassword(data.email, data.password, data.displayName);
+			reset();
 		} catch (error: any) {
 			if (error.code === 'auth/email-already-in-use') {
 				alert('Cannot create user, Email is already in use');
@@ -54,7 +49,6 @@ const SignUpForm = () => {
 				console.log('User creation encountered an error', error);
 			}
 		}
-		reset();
 	};
 
 	return (
