@@ -11,15 +11,13 @@ type Props = {};
 
 const Authentication = (props: Props) => {
 	return (
-		<Container maxWidth='lg'>
-			<StyledFlexContainer
-				flexDir={useMediaQuery(theme.breakpoints.down('md')) ? 'column' : 'row'}
-				flexGap='2rem'
-			>
-				<SignInForm />
-				<SignUpForm />
-			</StyledFlexContainer>
-		</Container>
+		<StyledFlexContainer
+			flexDir={useMediaQuery(theme.breakpoints.down('md')) ? 'column' : 'row'}
+			flexGap='2rem'
+		>
+			<SignInForm />
+			<SignUpForm />
+		</StyledFlexContainer>
 	);
 };
 

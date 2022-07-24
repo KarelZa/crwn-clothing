@@ -4,17 +4,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { UserContextProvider } from './contexts/user';
+import { UserContextProvider } from './contexts/user.context';
 import { ThemeProvider } from '@mui/system';
 import { theme } from './styles/appTheme/theme';
+import ProductContextProvider from './contexts/product.context';
+import { responsiveFontSizes } from '@mui/material';
+import ShoppingCartContextProvider from './contexts/cart.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={responsiveFontSizes(theme)}>
 				<UserContextProvider>
-					<App />
+					<ProductContextProvider>
+						<ShoppingCartContextProvider>
+							<App />
+						</ShoppingCartContextProvider>
+					</ProductContextProvider>
 				</UserContextProvider>
 			</ThemeProvider>
 		</BrowserRouter>
