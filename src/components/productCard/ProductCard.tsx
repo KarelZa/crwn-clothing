@@ -1,10 +1,12 @@
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ShoppingCartContext, useCartContext } from '../../contexts/cart.context';
 import { StyledProductCard } from '../../styles/productCard/productCard';
 import { StyledButton } from '../../styles/shared/button';
 
 interface ProductCardProps {
 	product: {
+		id: number;
 		name: string;
 		price: number;
 		imageUrl: string;
@@ -13,6 +15,10 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
 	const { name, price, imageUrl } = product;
+	const { addToCart } = useCartContext();
+
+	const addProductToCart = () => addToCart(product);
+
 	return (
 		<StyledProductCard>
 			<div className='product-card-image'>
@@ -23,6 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 					bgColor='#F3F3F4'
 					bgHover='#14110F'
 					sx={{ display: { lg: 'none' } }}
+					onClick={addProductToCart}
 				>
 					<Typography variant='button' fontWeight={600}>
 						Add to cart

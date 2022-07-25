@@ -26,7 +26,11 @@ export const StyledCartDropdown = styled('div')<StyledCartDropdownProps>(({ them
 		height: '240px',
 		display: 'flex',
 		flexDirection: 'column',
-		overflow: 'hidden',
+		overflow: 'scroll',
+		scrollbarWidth: 'none', // firefox
+		'&::-webkit-scrollbar': {
+			display: 'none', // edge,chrome
+		},
 	},
 
 	button: {

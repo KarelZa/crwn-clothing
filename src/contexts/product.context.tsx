@@ -1,19 +1,29 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
+import Product from '../model/product.model';
 import SHOP_DATA from '../shop-data.json';
 
-type Props = { children: React.ReactNode };
-interface ProductContextProps {
-	products: { id: number; name: string; imageUrl: string; price: number }[];
+interface Props {
+	children: React.ReactNode;
 }
-export const ProductContext = createContext<ProductContextProps>({
-	products: [],
-});
 
-export const ProductContextProvider = ({ children }: Props) => {
+interface ProductContextProps {
+	products: Product[];
+}
+export const ProductContext = createContext<ProductContextProps | undefined>(undefined);
+
+const ProductContextProvider = ({ children }: Props) => {
 	const [products, setProducts] = useState(SHOP_DATA);
 
 	const contextValue = { products };
 	return <ProductContext.Provider value={contextValue}>{children}</ProductContext.Provider>;
 };
 
-export default ProductContextProvider;
+const useProductContext = () => {
+	const context = useContext(ProductContext);
+	if (context === undefined) {
+		throw new Error('useProductContext must be used within a ProductContextProvider');
+	}
+	return context;
+};
+
+export { ProductContextProvider, useProductContext };

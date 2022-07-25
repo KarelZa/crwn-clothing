@@ -18,6 +18,6 @@ export const StyledCartIcon = styled('div')<StyledCartIconProps>(({ theme }) => 
 		position: 'absolute',
 		fontSize: '16px',
 		fontWeight: 'bold',
-		bottom: '2px',
+		bottom: '1px',
 	},
 }));

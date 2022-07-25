@@ -3,9 +3,8 @@ import { Outlet, Link } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import CartDropdown from '../../components/cart-dropdown/CartDropdown';
 import CartIcon from '../../components/cart-icon/CartIcon';
-import { ShoppingCartContext } from '../../contexts/cart.context';
-
-import { UserContext } from '../../contexts/user.context';
+import { useCartContext } from '../../contexts/cart.context';
+import { useUserContext } from '../../contexts/user.context';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
 
 import './navigation.styles.scss';
@@ -13,8 +12,8 @@ import './navigation.styles.scss';
 type NavigationProps = {};
 
 const Navigation = (props: NavigationProps) => {
-	const { currentUser } = useContext(UserContext);
-	const { isOpened } = useContext(ShoppingCartContext);
+	const { currentUser } = useUserContext();
+	const { isCartOpened } = useCartContext();
 	return (
 		<>
 			<div className='navigation'>
@@ -35,7 +34,7 @@ const Navigation = (props: NavigationProps) => {
 						</Link>
 					)}
 					<CartIcon />
-					{isOpened && <CartDropdown />}
+					{isCartOpened && <CartDropdown />}
 				</div>
 			</div>
 			<Outlet />
