@@ -11,6 +11,8 @@ interface ShoppingCartContextProps {
 	openDropDown: () => void;
 	cartItems: CartItem[];
 	addToCart: (item: Product) => void;
+	removeFromCart: (item: Product) => void;
+	decreaseCartItemQty: (item: Product) => void;
 }
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
@@ -40,7 +42,40 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		}
 	};
 
-	const contextValue = { isCartOpened, openDropDown, cartItems, addToCart };
+	const decreaseCartItemQty = (cartItemQtyToDecrease: Product) => {
+		const existingCartItem = cartItems.find(
+			(cartItem) => cartItem.id === cartItemQtyToDecrease.id
+		);
+		// If Product is already existing in the shopping cart
+		if (existingCartItem && existingCartItem.quantity > 1) {
+			setCartItems((prevCartItems) =>
+				prevCartItems.map((cartItem) =>
+					cartItem.id === cartItemQtyToDecrease.id
+						? { ...cartItem, quantity: cartItem.quantity - 1 }
+						: cartItem
+				)
+			);
+		}
+		if (existingCartItem?.quantity === 1) {
+			setCartItems((prevCartItems) =>
+				prevCartItems.filter((cartItem) => cartItem.id !== cartItemQtyToDecrease.id)
+			);
+		}
+	};
+
+	const removeFromCart = (cartItemToRemove: Product) => {
+		const newCartArr = cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
+		setCartItems(newCartArr);
+	};
+
+	const contextValue = {
+		isCartOpened,
+		openDropDown,
+		cartItems,
+		addToCart,
+		removeFromCart,
+		decreaseCartItemQty,
+	};
 	return (
 		<ShoppingCartContext.Provider value={contextValue}>{children}</ShoppingCartContext.Provider>
 	);
