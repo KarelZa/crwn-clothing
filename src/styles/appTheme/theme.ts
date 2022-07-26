@@ -1,16 +1,26 @@
 import { createTheme } from '@mui/material/styles';
 
+const breakpoints = {
+	values: {
+		xs: 0,
+		sm: 576,
+		md: 813,
+		lg: 1200,
+		xl: 1536,
+	},
+};
+
 export const theme = createTheme({
+	breakpoints,
 	typography: {
 		fontFamily: 'Montserrat',
-	},
-	breakpoints: {
-		values: {
-			xs: 0,
-			sm: 576,
-			md: 813,
-			lg: 1200,
-			xl: 1536,
+		subtitle1: {
+			[`@media screen and (max-width: ${breakpoints.values.sm}px)`]: {
+				fontSize: 13,
+			},
+			[`@media screen and (min-width: ${breakpoints.values.lg}px)`]: {
+				fontSize: 17,
+			},
 		},
 	},
 	components: {

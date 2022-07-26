@@ -8,54 +8,69 @@ export const StyledCheckout = styled('div')<StyledCheckoutProps>(({ theme }) => 
 export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ theme }) => ({
 	width: '100%',
 	height: 'auto',
-	// background: 'yellow',
 	display: 'flex',
+	flexDirection: 'column',
 	alignItems: 'center',
-	border: '1px solid black',
+	background: '#F3F7F6',
+	boxShadow: '0px 5px 20px -2px rgba(31,31,31,.9)',
 	margin: '0 0 1rem 0',
-	gap: '1rem',
 
-	'& .cart-item-image ': {
-		width: '40%',
-		height: 'auto',
-		// background: 'red',
+	'& .cart-item-main': {
+		padding: '1rem',
+		width: '100%',
 		display: 'flex',
-		marginLeft: '1rem',
-		img: {
-			width: '100%',
-			height: 'auto',
-		},
-	},
-	'& .cart-item-desc': {
-		// background: 'green',
-		width: '60%',
-		padding: '1rem 1rem',
-		display: 'flex',
-		flexDirection: 'column',
-		gap: '.5rem',
-		'& .item-name': {
-			textAlign: 'center',
-		},
-		'& .quantity': {
+		flexDirection: 'row',
+		gap: '1rem',
+
+		'& .cart-item-image ': {
+			width: '40%',
+			// background: 'red',
 			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'space-evenly',
-			'& .quantity-controls': {
-				width: '100%',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-evenly',
+			img: {
+				maxWidth: '100%',
+				maxHeight: '250px',
+				margin: '0 auto',
 			},
 		},
-		'& .price': {
+		'& .cart-item-desc': {
+			// background: 'green',
+			width: '60%',
+			display: 'flex',
+			flexDirection: 'column',
+
+			'& .header': {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'space-between',
+			},
+			'& .price': {
+				color: '#A24936',
+			},
+		},
+	},
+
+	'.quantity': {
+		width: '100%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		padding: '0 16%',
+		height: '2.6rem',
+		background: '#1F1F1F',
+		color: '#EFF1E4',
+
+		'& .quantity-controls': {
 			display: 'flex',
 			alignItems: 'center',
-			justifyContent: 'space-evenly',
-		},
-		'& .actions': {
-			marginTop: '1rem',
-			display: 'flex',
-			justifyContent: 'space-around',
+			'& span': {
+				width: '50px',
+				textAlign: 'center',
+			},
+			'& svg': {
+				'& path': {
+					color: '#EFF1E4',
+				},
+			},
 		},
 	},
 }));
