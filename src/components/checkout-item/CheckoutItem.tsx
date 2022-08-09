@@ -4,8 +4,8 @@ import CartItem from '../../model/cartItem.model';
 import { StyledCheckoutItem } from '../../styles/checkout/Checkout.styled';
 import Typography from '@mui/material/Typography';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { CgTrashEmpty } from 'react-icons/cg';
-import IconButton from '@mui/material/IconButton';
 
 type CheckoutItemProps = {
 	checkoutItem: CartItem;
@@ -30,44 +30,43 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 						>
 							{name}
 						</Typography>
-						<IconButton sx={{ '&:hover': { background: '#C2FBEF' } }}>
-							<CgTrashEmpty
-								onClick={() => removeFromCart(checkoutItem)}
-								size={23}
-								color='#14110F'
-							/>
-						</IconButton>
 					</div>
-					<div className='price'>
-						<Typography component={'span'} variant='subtitle2'>
-							{price} CZK
-						</Typography>
+					<div className='general-info'>
+						<div className='price'>
+							<Typography component={'span'} variant='h6' fontWeight={800}>
+								{price} CZK
+							</Typography>
+							<div className='quantity-controls'>
+								<AiOutlineMinusCircle
+									onClick={() => decreaseCartItemQty(checkoutItem)}
+									size={20}
+									color={'#14110F'}
+								/>
+								<Typography component={'span'} variant='h6' fontWeight={500}>
+									{quantity}
+								</Typography>
+								<AiOutlinePlusCircle
+									onClick={() => addToCart(checkoutItem)}
+									size={20}
+									color={'#14110F'}
+								/>
+							</div>
+						</div>
+						<div className='actions'>
+							<div className='favourite'>
+								<MdOutlineFavoriteBorder />
+								<Typography component={'span'} variant='subtitle1'>
+									FAVOURITE
+								</Typography>
+							</div>
+							<div className='delete' onClick={() => removeFromCart(checkoutItem)}>
+								<CgTrashEmpty />
+								<Typography component={'span'} variant='subtitle1'>
+									DELETE
+								</Typography>
+							</div>
+						</div>
 					</div>
-					{/* <div className='actions'>
-						<Typography component={'span'} variant='subtitle2'>
-							favourites
-						</Typography>
-					</div> */}
-				</div>
-			</div>
-			<div className='quantity'>
-				<Typography component={'span'} variant='subtitle1'>
-					Quantity:
-				</Typography>
-				<div className='quantity-controls'>
-					<AiOutlineMinusCircle
-						onClick={() => decreaseCartItemQty(checkoutItem)}
-						size={20}
-						color={'#14110F'}
-					/>
-					<Typography component={'span'} variant='h6' fontWeight={700}>
-						{quantity}
-					</Typography>
-					<AiOutlinePlusCircle
-						onClick={() => addToCart(checkoutItem)}
-						size={20}
-						color={'#14110F'}
-					/>
 				</div>
 			</div>
 		</StyledCheckoutItem>

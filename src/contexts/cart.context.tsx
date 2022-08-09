@@ -20,6 +20,7 @@ export const ShoppingCartContext = createContext<ShoppingCartContextProps | unde
 const ShoppingCartContextProvider = ({ children }: Props) => {
 	const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
 	const [cartItems, setCartItems] = useState<CartItem[] | []>([]);
+	const [discount, setDiscount] = useState(0);
 
 	const openDropDown = () => {
 		setIsCartOpened((prevState) => !prevState);
