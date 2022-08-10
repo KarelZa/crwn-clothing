@@ -12,6 +12,7 @@ import { SignUpFormProps } from './SignUpForm';
 
 interface CustomInputProps {
 	label?: string;
+	placeHolder?: string;
 	inputType?: string;
 }
 
@@ -38,6 +39,7 @@ function CustomInput<InputProps>(props: CustomInputProps & UseControllerProps<In
 			variant='outlined'
 			error={!!fieldState.error}
 			helperText={fieldState.error?.message || ''}
+			placeholder={props.placeHolder}
 			inputProps={{
 				'aria-label': props.name,
 			}}

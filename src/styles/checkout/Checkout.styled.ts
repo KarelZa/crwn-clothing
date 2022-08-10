@@ -4,41 +4,81 @@ interface StyledCheckoutProps {}
 interface StyledCheckoutItemProps {}
 
 export const StyledCheckout = styled('div')<StyledCheckoutProps>(({ theme }) => ({
-	display: 'grid',
-	gridTemplateColumns: '2fr 1fr',
-	gridTemplateRows: 'auto',
+	display: 'flex',
+	flexDirection: 'column',
 
-	gap: '1rem',
-	'& .checkout-items': {
-		overflow: 'auto',
-	},
 	'& .sidebar': {
-		gridColumn: '2 / 3',
-		position: 'sticky',
-		top: 0,
-		height: '100vh',
 		// background: 'yellow',
-
 		'& .sticky-wrapper': {
 			border: '1px solid #d1d1d1',
 			padding: '1.3rem',
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '1rem',
-			'& .discount > form': {
-				marginTop: '0',
-				display: 'flex',
-				flexDirection: 'column',
-				gap: '.5rem',
+			'& .discount': {
+				'& form': {
+					marginTop: '0',
+					display: 'flex',
+					flexDirection: 'column',
+				},
 				'& .discount-input-container': {
 					input: {
 						padding: '.6rem',
 					},
 					'& .MuiButton-root': {
 						padding: '.5rem',
+						width: '130px',
 					},
 					display: 'flex',
 					gap: '1rem',
+				},
+				'& .discount-badge': {
+					display: 'flex',
+					justifyContent: 'space-between',
+					color: 'white',
+					backgroundColor: '#041F1E',
+					marginTop: '1rem',
+					padding: '.8rem',
+					span: {
+						cursor: 'pointer',
+					},
+				},
+			},
+			'& .delivery': {
+				// background: 'red',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				gap: '.5rem',
+				'& .delivery-message': {
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					margin: '1rem 0 0 0',
+					gap: '1rem',
+					svg: {
+						width: '25px',
+						height: '25px',
+					},
+				},
+				'& .delivery-progress-bar': {
+					width: '93%',
+					height: '12px',
+					'& .delivery-progress--inner': {
+						height: '100%',
+						width: '100%',
+						borderRadius: '6px',
+						backgroundColor: '#eaeaea',
+						overflow: 'hidden',
+						display: 'flex',
+						justifyContent: 'flex-start',
+						'& .delivery-progress-bar--fill': {
+							background: '#62AB37',
+							width: '100%',
+							transition: 'all 0.3s ease-out',
+						},
+					},
 				},
 			},
 			'& .pricing': {
@@ -51,6 +91,81 @@ export const StyledCheckout = styled('div')<StyledCheckoutProps>(({ theme }) => 
 			},
 		},
 	},
+
+	[theme.breakpoints.up('sm')]: {},
+	[theme.breakpoints.up('md')]: {
+		display: 'grid',
+		gridTemplateColumns: '2fr 1fr',
+		gridTemplateRows: 'auto',
+
+		gap: '1rem',
+		'& .checkout-items': {
+			overflow: 'auto',
+		},
+		'& .sidebar': {
+			gridColumn: '2 / 3',
+			position: 'sticky',
+			top: 0,
+			height: '100vh',
+			// background: 'yellow',
+
+			'& .sticky-wrapper': {
+				border: '1px solid #d1d1d1',
+				padding: '1.3rem',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '1rem',
+				'& .discount': {
+					'& form': {
+						marginTop: '0',
+						display: 'flex',
+						flexDirection: 'column',
+					},
+					'& .discount-input-container': {
+						input: {
+							padding: '.6rem',
+						},
+						'& .MuiButton-root': {
+							padding: '.5rem',
+						},
+						display: 'flex',
+						gap: '1rem',
+					},
+					'& .discount-badge': {
+						display: 'flex',
+						justifyContent: 'space-between',
+						color: 'white',
+						backgroundColor: '#041F1E',
+						marginTop: '1rem',
+						padding: '.8rem',
+						span: {
+							cursor: 'pointer',
+						},
+					},
+				},
+				'& .delivery-bonus': {
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-around',
+					margin: '1rem 0 0 0',
+					// gap: '1rem',
+					svg: {
+						width: '25px',
+						height: '25px',
+					},
+				},
+				'& .pricing': {
+					'& > div': {
+						// background: 'red',
+						display: 'flex',
+						paddingTop: '.5rem',
+						justifyContent: 'space-between',
+					},
+				},
+			},
+		},
+	},
+	[theme.breakpoints.up('lg')]: {},
 }));
 
 export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ theme }) => ({

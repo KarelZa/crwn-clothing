@@ -8,11 +8,16 @@ interface Props {
 
 interface ShoppingCartContextProps {
 	isCartOpened: boolean;
+	discount: {
+		isActivated: boolean;
+		discountAmount: number;
+	};
 	openDropDown: () => void;
 	cartItems: CartItem[];
 	addToCart: (item: Product) => void;
 	removeFromCart: (item: Product) => void;
 	decreaseCartItemQty: (item: Product) => void;
+	activateDiscount: (value: number) => void;
 }
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
@@ -20,10 +25,21 @@ export const ShoppingCartContext = createContext<ShoppingCartContextProps | unde
 const ShoppingCartContextProvider = ({ children }: Props) => {
 	const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
 	const [cartItems, setCartItems] = useState<CartItem[] | []>([]);
-	const [discount, setDiscount] = useState(0);
+	const [discount, setDiscount] = useState({
+		isActivated: false,
+		discountAmount: 0,
+	});
 
 	const openDropDown = () => {
 		setIsCartOpened((prevState) => !prevState);
+	};
+
+	const activateDiscount = (value: number) => {
+		setDiscount((prevState) => ({
+			...prevState,
+			isActivated: !prevState.isActivated,
+			discountAmount: value,
+		}));
 	};
 
 	const addToCart = (productToAdd: Product) => {
@@ -76,7 +92,10 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		addToCart,
 		removeFromCart,
 		decreaseCartItemQty,
+		discount,
+		activateDiscount,
 	};
+
 	return (
 		<ShoppingCartContext.Provider value={contextValue}>{children}</ShoppingCartContext.Provider>
 	);
