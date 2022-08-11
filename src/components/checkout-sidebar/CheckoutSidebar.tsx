@@ -1,11 +1,12 @@
-import { Divider, Typography } from '@mui/material';
 import React from 'react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import { useCartContext } from '../../contexts/cart.context';
 import { StyledButton } from '../../styles/shared/button';
 import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
 import CustomInput from '../sign-up-form/CustomInput';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { StyledSidebar } from '../../styles/checkout-sidebar/CheckoutSidebar.styled';
@@ -69,7 +70,6 @@ const CheckoutSidebar = () => {
 								Gift / Discount Code
 							</Typography>
 							<StyledSignUpForm onSubmit={handleSubmit(formSubmitHandler)}>
-								{/* <div className='discount-input-container'> */}
 								<CustomInput
 									name='discountCode'
 									control={control}
@@ -86,7 +86,6 @@ const CheckoutSidebar = () => {
 								>
 									USE
 								</StyledButton>
-								{/* </div> */}
 							</StyledSignUpForm>
 						</>
 					)}

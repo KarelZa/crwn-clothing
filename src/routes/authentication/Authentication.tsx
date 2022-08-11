@@ -5,7 +5,6 @@ import SignInForm from '../../components/sign-in-form/SignInForm';
 import SignUpForm from '../../components/sign-up-form/SignUpForm';
 import { theme } from '../../styles/appTheme/theme';
 import { StyledFlexContainer } from '../../styles/shared/flexContainer';
-import { signInWithGooglePopup, createUserDocFromAuth } from '../../utils/firebase/firebase';
 
 type Props = {};
 
