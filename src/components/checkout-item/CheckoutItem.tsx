@@ -1,11 +1,11 @@
 import React from 'react';
 import { useCartContext } from '../../contexts/cart.context';
 import CartItem from '../../model/cartItem.model';
-import { StyledCheckoutItem } from '../../styles/checkout/Checkout.styled';
 import Typography from '@mui/material/Typography';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { CgTrashEmpty } from 'react-icons/cg';
+import { StyledCheckoutItem } from '../../styles/checkout-item/CheckoutItem.styled';
 
 type CheckoutItemProps = {
 	checkoutItem: CartItem;
@@ -14,6 +14,11 @@ type CheckoutItemProps = {
 const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 	const { imageUrl, name, price, quantity } = checkoutItem;
 	const { addToCart, removeFromCart, decreaseCartItemQty } = useCartContext();
+
+	const decreaseItemQtyHandler = () => decreaseCartItemQty(checkoutItem);
+	const increaseItemQtyHandler = () => addToCart(checkoutItem);
+	const removeItemHandler = () => removeFromCart(checkoutItem);
+
 	return (
 		<StyledCheckoutItem>
 			<div className='cart-item-main'>
@@ -38,7 +43,7 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 							</Typography>
 							<div className='quantity-controls'>
 								<AiOutlineMinusCircle
-									onClick={() => decreaseCartItemQty(checkoutItem)}
+									onClick={decreaseItemQtyHandler}
 									size={20}
 									color={'#14110F'}
 								/>
@@ -46,7 +51,7 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 									{quantity}
 								</Typography>
 								<AiOutlinePlusCircle
-									onClick={() => addToCart(checkoutItem)}
+									onClick={increaseItemQtyHandler}
 									size={20}
 									color={'#14110F'}
 								/>
@@ -55,14 +60,14 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 						<div className='actions'>
 							<div className='favourite'>
 								<MdOutlineFavoriteBorder />
-								<Typography component={'span'} variant='subtitle1'>
+								<Typography component={'span'} variant='subtitle2'>
 									FAVOURITE
 								</Typography>
 							</div>
-							<div className='delete' onClick={() => removeFromCart(checkoutItem)}>
+							<div className='remove' onClick={removeItemHandler}>
 								<CgTrashEmpty />
-								<Typography component={'span'} variant='subtitle1'>
-									DELETE
+								<Typography component={'span'} variant='subtitle2'>
+									REMOVE
 								</Typography>
 							</div>
 						</div>
