@@ -12,18 +12,20 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 			'& form': {
 				marginTop: '0',
 				display: 'flex',
-				flexDirection: 'column',
-			},
-			'& .discount-input-container': {
+				// flexDirection: 'column',
+				gap: '1rem',
+				'& .MuiButton-root': {
+					height: '2.7rem',
+					width: '130px',
+				},
 				input: {
 					padding: '.6rem',
 				},
-				'& .MuiButton-root': {
-					padding: '.5rem',
-					width: '130px',
+				'& .MuiFormControl-root': {
+					'& p': {
+						marginLeft: '.6rem',
+					},
 				},
-				display: 'flex',
-				gap: '1rem',
 			},
 			'& .discount-badge': {
 				display: 'flex',
@@ -101,18 +103,14 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 				'& form': {
 					marginTop: '0',
 					display: 'flex',
-					flexDirection: 'column',
-				},
-				'& .discount-input-container': {
 					input: {
 						padding: '.6rem',
 					},
 					'& .MuiButton-root': {
-						padding: '.5rem',
+						// padding: '.5rem',
 					},
-					display: 'flex',
-					gap: '1rem',
 				},
+
 				'& .discount-badge': {
 					display: 'flex',
 					justifyContent: 'space-between',

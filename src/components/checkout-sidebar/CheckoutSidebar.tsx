@@ -14,36 +14,34 @@ interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
 }
 
-interface Props {
-	productsPrice: string | number;
-}
-
 // Rules
 const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
-	discountCode: yup.string().defined(),
+	discountCode: yup.string().required('Have you entered code?'),
 });
 
-const CheckoutSidebar = ({ productsPrice }: Props) => {
-	const { activateDiscount, discount } = useCartContext();
+const CheckoutSidebar = () => {
+	const { activateDiscount, discount, cartItemsPrice } = useCartContext();
 	const deliveryPrice = 89;
-	const forFreeDel = 1200;
+	const freeDeliveryThreshold = 1200;
 	let barFillWidth = '0%'; // for bar filling width
 
 	const { control, handleSubmit, reset } = useForm({
 		resolver: yupResolver(schema),
+		mode: 'onSubmit',
 	});
 
-	if (+productsPrice > 0) {
-		barFillWidth = Math.round((+productsPrice / 1200) * 100) + '%'; // Calculation of the filling
+	if (cartItemsPrice > 0) {
+		barFillWidth = Math.round((cartItemsPrice / 1200) * 100) + '%'; // Calculation of the filling
 	}
 
 	const formSubmitHandler = (data: CheckoutSidebarProps) => {
 		if (data.discountCode === '#today15') {
 			activateDiscount(0.85);
+			reset();
 		} else if (data.discountCode === '#today20') {
 			activateDiscount(0.8);
+			reset();
 		}
-		reset();
 	};
 
 	return (
@@ -71,24 +69,24 @@ const CheckoutSidebar = ({ productsPrice }: Props) => {
 								Gift / Discount Code
 							</Typography>
 							<StyledSignUpForm onSubmit={handleSubmit(formSubmitHandler)}>
-								<div className='discount-input-container'>
-									<CustomInput
-										name='discountCode'
-										control={control}
-										defaultValue=''
-										placeHolder='ENTER CODE'
-									/>
-									<StyledButton
-										variant='contained'
-										type='submit'
-										size='large'
-										bgColor='black'
-										textColor='white'
-										bgHover='black'
-									>
-										USE
-									</StyledButton>
-								</div>
+								{/* <div className='discount-input-container'> */}
+								<CustomInput
+									name='discountCode'
+									control={control}
+									defaultValue=''
+									placeHolder='ENTER CODE'
+								/>
+								<StyledButton
+									variant='contained'
+									type='submit'
+									size='large'
+									bgColor='black'
+									textColor='white'
+									bgHover='black'
+								>
+									USE
+								</StyledButton>
+								{/* </div> */}
 							</StyledSignUpForm>
 						</>
 					)}
@@ -96,14 +94,14 @@ const CheckoutSidebar = ({ productsPrice }: Props) => {
 				<div className='delivery'>
 					<div className='delivery-message'>
 						<TbTruckDelivery />
-						{productsPrice >= 1200 ? (
+						{cartItemsPrice >= freeDeliveryThreshold ? (
 							<Typography component={'p'} variant='overline'>
-								Congratz, <b>you have free delivery</b>
+								Congrats, <b>you have free delivery</b>
 							</Typography>
 						) : (
 							<Typography component={'p'} variant='overline'>
-								Buy for <b> {forFreeDel - +productsPrice} </b> CZK and GET FREE
-								DELIVERY
+								Buy for <b> {freeDeliveryThreshold - cartItemsPrice} </b> CZK and
+								GET FREE DELIVERY
 							</Typography>
 						)}
 					</div>
@@ -122,7 +120,7 @@ const CheckoutSidebar = ({ productsPrice }: Props) => {
 							Price of products
 						</Typography>
 						<Typography component={'span'} variant='body1' fontWeight={800}>
-							{productsPrice} CZK
+							{cartItemsPrice} CZK
 						</Typography>
 					</div>
 					<div>
@@ -130,7 +128,9 @@ const CheckoutSidebar = ({ productsPrice }: Props) => {
 							Delivery
 						</Typography>
 						<Typography component={'span'} variant='body1' fontWeight={800}>
-							{productsPrice >= 1200 ? 'FREE' : `${deliveryPrice} CZK`}
+							{cartItemsPrice >= freeDeliveryThreshold
+								? 'FREE'
+								: `${deliveryPrice} CZK`}
 						</Typography>
 					</div>
 					<Divider role='presentation' sx={{ mt: 1 }} />
@@ -139,9 +139,9 @@ const CheckoutSidebar = ({ productsPrice }: Props) => {
 							Total Price
 						</Typography>
 						<Typography component={'span'} variant='body1' fontWeight={800}>
-							{productsPrice >= 1200
-								? `${+productsPrice} CZK`
-								: `${+productsPrice + deliveryPrice} CZK`}
+							{cartItemsPrice >= freeDeliveryThreshold
+								? `${cartItemsPrice} CZK`
+								: `${cartItemsPrice + deliveryPrice} CZK`}
 						</Typography>
 					</div>
 				</div>

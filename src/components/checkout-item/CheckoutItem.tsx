@@ -23,7 +23,7 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 		<StyledCheckoutItem>
 			<div className='cart-item-main'>
 				<div className='cart-item-image'>
-					<img src={imageUrl} />
+					<img src={imageUrl} alt={name} />
 				</div>
 				<div className='cart-item-desc'>
 					<div className='header'>
@@ -38,7 +38,7 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 					</div>
 					<div className='general-info'>
 						<div className='price'>
-							<Typography component={'span'} variant='h6' fontWeight={800}>
+							<Typography component={'span'} variant='h5' fontWeight={800}>
 								{price} CZK
 							</Typography>
 							<div className='quantity-controls'>
@@ -47,7 +47,7 @@ const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 									size={20}
 									color={'#14110F'}
 								/>
-								<Typography component={'span'} variant='h6' fontWeight={500}>
+								<Typography component={'span'} variant='h5' fontWeight={500}>
 									{quantity}
 								</Typography>
 								<AiOutlinePlusCircle

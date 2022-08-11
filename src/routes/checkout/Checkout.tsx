@@ -5,16 +5,8 @@ import { useCartContext } from '../../contexts/cart.context';
 import { StyledCheckout } from '../../styles/checkout/Checkout.styled';
 import CheckoutSidebar from '../../components/checkout-sidebar/CheckoutSidebar';
 
-type CheckoutProps = {};
-
 const Checkout = () => {
-	const { cartItems, activateDiscount, discount } = useCartContext();
-	const productsPrice = discount.isActivated
-		? (
-				cartItems.reduce((accu, curr) => accu + curr.price * curr.quantity, 0) *
-				discount.discountAmount
-		  ).toFixed()
-		: cartItems.reduce((accu, curr) => accu + curr.price * curr.quantity, 0);
+	const { cartItems } = useCartContext();
 
 	return (
 		<>
@@ -27,7 +19,7 @@ const Checkout = () => {
 						return <CheckoutItem key={item.id} checkoutItem={item} />;
 					})}
 				</div>
-				<CheckoutSidebar productsPrice={productsPrice} />
+				<CheckoutSidebar />
 			</StyledCheckout>
 		</>
 	);

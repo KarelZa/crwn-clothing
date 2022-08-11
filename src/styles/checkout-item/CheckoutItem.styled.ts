@@ -57,7 +57,7 @@ export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ them
 					'& .quantity-controls': {
 						display: 'flex',
 						alignItems: 'center',
-
+						userSelect: 'none',
 						'& span': {
 							width: '30px',
 							textAlign: 'center',

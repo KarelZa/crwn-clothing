@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import CartItem from '../model/cartItem.model';
 import Product from '../model/product.model';
 
@@ -18,22 +18,39 @@ interface ShoppingCartContextProps {
 	removeFromCart: (item: Product) => void;
 	decreaseCartItemQty: (item: Product) => void;
 	activateDiscount: (value: number) => void;
+	cartItemsPrice: number;
 }
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
 
 const ShoppingCartContextProvider = ({ children }: Props) => {
 	const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
-	const [cartItems, setCartItems] = useState<CartItem[] | []>([]);
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+	const [cartItemsPrice, setCartItemsPrice] = useState(0);
 	const [discount, setDiscount] = useState({
 		isActivated: false,
 		discountAmount: 0,
 	});
 
+	// Count of price of items inside the cart, with or without discount
+	useEffect(() => {
+		const productsPrice = discount.isActivated
+			? (
+					cartItems.reduce(
+						(accu: any, curr: any) => accu + curr.price * curr.quantity,
+						0
+					) * discount.discountAmount
+			  ).toFixed()
+			: cartItems.reduce((accu, curr) => accu + curr.price * curr.quantity, 0);
+		setCartItemsPrice(+productsPrice);
+	}, [cartItems, discount]);
+
+	// Toggler for Quick Cart View
 	const openDropDown = () => {
 		setIsCartOpened((prevState) => !prevState);
 	};
 
+	// Sets Discount
 	const activateDiscount = (value: number) => {
 		setDiscount((prevState) => ({
 			...prevState,
@@ -94,6 +111,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		decreaseCartItemQty,
 		discount,
 		activateDiscount,
+		cartItemsPrice,
 	};
 
 	return (
