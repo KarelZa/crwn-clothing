@@ -5,6 +5,7 @@ import CartDropdown from '../../components/cart-dropdown/CartDropdown';
 import CartIcon from '../../components/cart-icon/CartIcon';
 import { useCartContext } from '../../contexts/cart.context';
 import { useUserContext } from '../../contexts/user.context';
+import useHover from '../../hooks/useHover';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
 
 import './navigation.styles.scss';
@@ -13,7 +14,7 @@ type NavigationProps = {};
 
 const Navigation = (props: NavigationProps) => {
 	const { currentUser } = useUserContext();
-	const { isCartOpened } = useCartContext();
+
 	return (
 		<>
 			<div className='navigation'>
@@ -34,7 +35,6 @@ const Navigation = (props: NavigationProps) => {
 						</Link>
 					)}
 					<CartIcon />
-					{isCartOpened && <CartDropdown />}
 				</div>
 			</div>
 			<Outlet />

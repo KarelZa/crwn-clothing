@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 interface StyledCartDropdownProps {}
 
 export const StyledCartDropdown = styled('div')<StyledCartDropdownProps>(({ theme }) => ({
-	position: 'absolute',
+	// position: 'absolute',
 	width: '260px',
 	height: '340px',
 	display: 'flex',
