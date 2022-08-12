@@ -11,15 +11,19 @@ const CartItem = ({ cartItem }: CartItemProps) => {
 	const { name, price, quantity, imageUrl } = cartItem;
 	return (
 		<StyledCartItem>
-			<img src={imageUrl} alt={name} />
+			<div className='cart-item-img'>
+				<img src={imageUrl} alt={name} />
+			</div>
 			<div className='cart-item-details'>
-				<Typography component={'span'} variant='body2'>
-					{name}
+				<Typography component={'span'} variant='body1'>
+					{quantity} x <strong>{name}</strong>
 				</Typography>
-				<Typography component={'span'} variant='subtitle2' fontWeight={700}>
-					{quantity} x {price} CZK
+
+				<Typography component={'span'} variant='body1' fontWeight={500}>
+					{price} CZK
 				</Typography>
 			</div>
+			<span>&#10006;</span>
 		</StyledCartItem>
 	);
 };

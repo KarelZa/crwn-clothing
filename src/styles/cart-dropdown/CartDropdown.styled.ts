@@ -4,18 +4,16 @@ import { styled } from '@mui/material/styles';
 interface StyledCartDropdownProps {}
 
 export const StyledCartDropdown = styled('div')<StyledCartDropdownProps>(({ theme }) => ({
-	// position: 'absolute',
-	width: '260px',
-	height: '340px',
+	// width: '260px',
+	// height: '340px',
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
 	padding: '20px',
 	border: '1px solid black',
 	backgroundColor: 'white',
-	top: '100px',
-
 	zIndex: '5',
+	marginTop: '1rem',
 
 	// .empty-message {
 	//   font-size: 18px;
@@ -23,10 +21,10 @@ export const StyledCartDropdown = styled('div')<StyledCartDropdownProps>(({ them
 	// }
 
 	'& .cart-items ': {
-		height: '240px',
+		maxHeight: '340px',
 		display: 'flex',
 		flexDirection: 'column',
-		overflow: 'scroll',
+		overflowY: 'auto',
 		scrollbarWidth: 'none', // firefox
 		'&::-webkit-scrollbar': {
 			display: 'none', // edge,chrome

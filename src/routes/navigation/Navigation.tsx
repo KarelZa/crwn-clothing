@@ -34,7 +34,9 @@ const Navigation = (props: NavigationProps) => {
 							Sign In
 						</Link>
 					)}
-					<CartIcon />
+					<Link className='nav-link' to='/checkout'>
+						<CartIcon />
+					</Link>
 				</div>
 			</div>
 			<Outlet />

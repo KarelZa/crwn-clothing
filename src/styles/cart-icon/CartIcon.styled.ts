@@ -9,7 +9,7 @@ export const StyledCartIcon = styled('div')<StyledCartIconProps>(({ theme }) => 
 	alignItems: 'center',
 	justifyContent: 'center',
 	cursor: 'pointer',
-	marginLeft: '15px',
+	marginLeft: '10px',
 	svg: {
 		width: '33px',
 		height: '33px',

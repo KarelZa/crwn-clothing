@@ -1,5 +1,4 @@
-import Popover from '@mui/material/Popover';
-import React, { useContext } from 'react';
+import React from 'react';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/shopping-bag.svg';
 import { ShoppingCartContext, useCartContext } from '../../contexts/cart.context';
 import { StyledCartIcon } from '../../styles/cart-icon/CartIcon.styled';
@@ -11,9 +10,7 @@ interface cartIconProps {}
 const CartIcon = (props: cartIconProps) => {
 	const { cartItems } = useCartContext();
 	const countOfItems = cartItems.reduce((accu, curr) => accu + curr.quantity, 0);
-
 	const popupState = usePopupState({ variant: 'popper', popupId: 'cartPopover' });
-
 	// TouchDevice Simple Detection
 	function isTouchDevice() {
 		return 'ontouchstart' in window || navigator.maxTouchPoints > 0;

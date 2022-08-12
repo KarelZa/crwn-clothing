@@ -5,15 +5,24 @@ interface StyledCartItemProps {}
 export const StyledCartItem = styled('div')<StyledCartItemProps>(({ theme }) => ({
 	width: '100%',
 	display: 'flex',
-	height: '80px',
+	height: '120px',
 	margin: '0 0 15px 0',
 	justifyContent: 'space-around',
-	img: {
-		width: '30%',
+	alignItems: 'center',
+
+	'& .cart-item-img': {
+		width: '150px',
+		display: 'flex',
+		alignItems: 'center',
+		img: {
+			padding: '.5rem',
+			width: '100%',
+			borderRadius: '16px',
+		},
 	},
 
 	'.cart-item-details': {
-		width: '70%',
+		width: '80%',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
