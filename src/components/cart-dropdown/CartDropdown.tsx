@@ -1,8 +1,7 @@
 import Typography from '@mui/material/Typography';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { ShoppingCartContext, useCartContext } from '../../contexts/cart.context';
+import { useCartContext } from '../../contexts/cart.context';
 import { StyledCartDropdown } from '../../styles/cart-dropdown/CartDropdown.styled';
 import { StyledButton } from '../../styles/shared/button';
 import CartItem from '../cart-item/CartItem';

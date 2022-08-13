@@ -1,5 +1,21 @@
 import { styled } from '@mui/material/styles';
+import { keyframes } from '@mui/system';
 interface StyledCheckoutItemProps {}
+
+const buzz = keyframes`
+  	10%, 90% {
+	  transform: translate3d(-1px, 0, 0);
+	}
+	20%, 80% {
+	  transform: translate3d(2px, 0, 0);
+	}
+	30%, 50%, 70% {
+	  transform: translate3d(-4px, 0, 0);
+	}
+	40%, 60% {
+	  transform: translate3d(4px, 0, 0);
+	}
+`;
 
 export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ theme }) => ({
 	width: '100%',
@@ -85,6 +101,20 @@ export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ them
 							marginRight: '.2rem',
 						},
 					},
+					'& .remove': {
+						'&:hover > svg': {
+							animation: `${buzz} 0.82s cubic-bezier(.36,.07,.19,.97) both`,
+						},
+						'& span:hover': {},
+					},
+					'& .favourite': {
+						'&:hover > svg': {
+							// animation: `${buzz} 0.82s cubic-bezier(.36,.07,.19,.97) both`,
+						},
+						'& span:hover': {
+							color: 'red',
+						},
+					},
 				},
 			},
 		},
@@ -99,6 +129,7 @@ export const StyledCheckoutItem = styled('div')<StyledCheckoutItemProps>(({ them
 						gap: '2rem',
 					},
 					'& .actions': {
+						width: '100%',
 						gap: '1rem',
 						'& .favourite,& .remove': {
 							span: {

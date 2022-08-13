@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
-import CartDropdown from '../../components/cart-dropdown/CartDropdown';
 import CartIcon from '../../components/cart-icon/CartIcon';
-import { useCartContext } from '../../contexts/cart.context';
 import { useUserContext } from '../../contexts/user.context';
-import useHover from '../../hooks/useHover';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
 
 import './navigation.styles.scss';
