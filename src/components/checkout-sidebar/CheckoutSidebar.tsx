@@ -10,6 +10,7 @@ import CustomInput from '../sign-up-form/CustomInput';
 import { useForm } from 'react-hook-form';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { StyledSidebar } from '../../styles/checkout-sidebar/CheckoutSidebar.styled';
+import DeliveryWidget from '../delivery-widget/DeliveryWidget';
 
 interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
@@ -21,19 +22,13 @@ const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
 });
 
 const CheckoutSidebar = () => {
-	const { activateDiscount, discount, cartItemsPrice } = useCartContext();
+	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } = useCartContext();
 	const deliveryPrice = 89;
-	const freeDeliveryThreshold = 1200;
-	let barFillWidth = '0%'; // for bar filling width
 
 	const { control, handleSubmit, reset } = useForm({
 		resolver: yupResolver(schema),
 		mode: 'onSubmit',
 	});
-
-	if (cartItemsPrice > 0) {
-		barFillWidth = Math.round((cartItemsPrice / 1200) * 100) + '%'; // Calculation of the filling
-	}
 
 	const formSubmitHandler = (data: CheckoutSidebarProps) => {
 		if (data.discountCode === '#today15') {
@@ -90,29 +85,7 @@ const CheckoutSidebar = () => {
 						</>
 					)}
 				</div>
-				<div className='delivery'>
-					<div className='delivery-message'>
-						<TbTruckDelivery />
-						{cartItemsPrice >= freeDeliveryThreshold ? (
-							<Typography component={'p'} variant='overline'>
-								Congrats, <b>you have free delivery</b>
-							</Typography>
-						) : (
-							<Typography component={'p'} variant='overline'>
-								Buy for <b> {freeDeliveryThreshold - cartItemsPrice} </b> CZK and
-								GET FREE DELIVERY
-							</Typography>
-						)}
-					</div>
-					<div className='delivery-progress-bar'>
-						<div className='delivery-progress--inner'>
-							<div
-								className='delivery-progress-bar--fill'
-								style={{ width: barFillWidth }}
-							></div>
-						</div>
-					</div>
-				</div>
+				<DeliveryWidget />
 				<div className='pricing'>
 					<div>
 						<Typography component={'span'} variant='body1'>

@@ -1,34 +1,57 @@
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
-interface StyledCartDropdownProps {}
+interface StyledCartDropdownProps {
+	countOfItems: number;
+}
 
-export const StyledCartDropdown = styled('div')<StyledCartDropdownProps>(({ theme }) => ({
-	// width: '260px',
-	// height: '340px',
+export const StyledCartDropdown = styled('div', {
+	shouldForwardProp: (prop) => prop !== 'countOfItems',
+})<StyledCartDropdownProps>(({ theme, countOfItems }) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
 	padding: '20px',
-	border: '1px solid black',
+	border: '1px solid #d1d1d1',
 	backgroundColor: 'white',
-	zIndex: '5',
+	zIndex: '20',
 	marginTop: '1rem',
 
-	// .empty-message {
-	//   font-size: 18px;
-	//   margin: 50px auto;
-	// }
-
 	'& .cart-items ': {
-		maxHeight: '340px',
+		maxHeight: '400px',
 		display: 'flex',
 		flexDirection: 'column',
 		overflowY: 'auto',
-		scrollbarWidth: 'none', // firefox
+		scrollbarWidth: countOfItems > 3 ? '' : 'none', // edge,chrome
 		'&::-webkit-scrollbar': {
-			display: 'none', // edge,chrome
+			display: countOfItems > 3 ? '' : 'none', // edge,chrome
 		},
+	},
+
+	'& .cart-items-price': {
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'flex-end',
+		padding: '1.5rem 0',
+		position: 'relative',
+		'&::before, &::after': {
+			content: '""',
+			background: '#d1d1d1',
+			position: 'absolute',
+			right: '-20px',
+			left: '-20px',
+			height: '1px',
+		},
+		'&::before': {
+			top: 0,
+		},
+		'&::after': {
+			bottom: 0,
+		},
+	},
+
+	'& .delivery': {
+		// width: '100%',
+		margin: '0rem 0 2rem 0',
 	},
 
 	button: {

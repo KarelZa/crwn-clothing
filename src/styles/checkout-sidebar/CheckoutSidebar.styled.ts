@@ -39,43 +39,6 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 				},
 			},
 		},
-		'& .delivery': {
-			// background: 'red',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			gap: '.5rem',
-			'& .delivery-message': {
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				margin: '1rem 0 0 0',
-				gap: '1rem',
-				svg: {
-					width: '25px',
-					height: '25px',
-				},
-			},
-			'& .delivery-progress-bar': {
-				width: '93%',
-				height: '12px',
-				'& .delivery-progress--inner': {
-					height: '100%',
-					width: '100%',
-					borderRadius: '6px',
-					backgroundColor: '#eaeaea',
-					overflow: 'hidden',
-					display: 'flex',
-					justifyContent: 'flex-start',
-					'& .delivery-progress-bar--fill': {
-						background: '#62AB37',
-						width: '100%',
-						transition: 'all 0.3s ease-out',
-					},
-				},
-			},
-		},
 		'& .pricing': {
 			'& > div': {
 				// background: 'red',
@@ -123,17 +86,11 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 					},
 				},
 			},
-			'& .delivery-bonus': {
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-around',
-				margin: '1rem 0 0 0',
-				// gap: '1rem',
-				svg: {
-					width: '25px',
-					height: '25px',
-				},
+			'& .delivery': {
+				'& .delivery-message': {},
+				'& .delivery-progress-bar': {},
 			},
+
 			'& .pricing': {
 				'& > div': {
 					// background: 'red',

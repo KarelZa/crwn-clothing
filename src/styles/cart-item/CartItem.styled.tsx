@@ -33,4 +33,12 @@ export const StyledCartItem = styled('div')<StyledCartItemProps>(({ theme }) => 
 			textTransfrom: 'capitalize',
 		},
 	},
+	'.remove-btn': {
+		margin: '0 1rem 0 0rem',
+		cursor: 'pointer',
+		'&:hover': {
+			color: 'red',
+			fontWeight: 800,
+		},
+	},
 }));

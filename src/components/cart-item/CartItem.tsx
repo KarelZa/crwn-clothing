@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import ICartItem from '../../model/cartItem.model';
 import { StyledCartItem } from '../../styles/cart-item/CartItem.styled';
+import { useCartContext } from '../../contexts/cart.context';
 
 interface CartItemProps {
 	cartItem: ICartItem;
@@ -9,6 +10,10 @@ interface CartItemProps {
 
 const CartItem = ({ cartItem }: CartItemProps) => {
 	const { name, price, quantity, imageUrl } = cartItem;
+	const { removeFromCart } = useCartContext();
+
+	const removeCartItemHandler = () => removeFromCart(cartItem);
+
 	return (
 		<StyledCartItem>
 			<div className='cart-item-img'>
@@ -23,7 +28,9 @@ const CartItem = ({ cartItem }: CartItemProps) => {
 					{price} CZK
 				</Typography>
 			</div>
-			<span>&#10006;</span>
+			<span onClick={removeCartItemHandler} className='remove-btn'>
+				&#10006;
+			</span>
 		</StyledCartItem>
 	);
 };

@@ -19,6 +19,7 @@ interface ShoppingCartContextProps {
 	decreaseCartItemQty: (item: Product) => void;
 	activateDiscount: (value: number) => void;
 	cartItemsPrice: number;
+	freeDeliveryThreshold: number;
 }
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
@@ -31,6 +32,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		isActivated: false,
 		discountAmount: 0,
 	});
+	const freeDeliveryThreshold = 1200;
 
 	// Count of price of items inside the cart, with or without discount
 	useEffect(() => {
@@ -112,6 +114,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		discount,
 		activateDiscount,
 		cartItemsPrice,
+		freeDeliveryThreshold,
 	};
 
 	return (
