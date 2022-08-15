@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserContextProvider } from './contexts/user.context';
 import { ThemeProvider } from '@mui/system';
 import { theme } from './styles/appTheme/theme';
-import { ProductContextProvider } from './contexts/product.context';
+import { CategoriesContextProvider } from './contexts/categories.context';
 import { responsiveFontSizes } from '@mui/material';
 import { ShoppingCartContextProvider } from './contexts/cart.context';
 
@@ -17,11 +17,11 @@ root.render(
 		<BrowserRouter>
 			<ThemeProvider theme={responsiveFontSizes(theme)}>
 				<UserContextProvider>
-					<ProductContextProvider>
+					<CategoriesContextProvider>
 						<ShoppingCartContextProvider>
 							<App />
 						</ShoppingCartContextProvider>
-					</ProductContextProvider>
+					</CategoriesContextProvider>
 				</UserContextProvider>
 			</ThemeProvider>
 		</BrowserRouter>

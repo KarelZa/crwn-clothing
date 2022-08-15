@@ -13,7 +13,17 @@ import {
 } from 'firebase/auth';
 // doc ==> to get document instance
 // getDoc,setDoc ==> to get / set doc data
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from 'firebase/firestore';
+import {
+	getFirestore,
+	doc,
+	getDoc,
+	setDoc,
+	collection,
+	writeBatch,
+	query,
+	getDocs,
+} from 'firebase/firestore';
+import { string } from 'yup/lib/locale';
 
 // Firebase web-app configuration
 const firebaseConfig = {
@@ -63,6 +73,33 @@ export const addCollectionAndDocuments = async (
 
 	await batch.commit();
 	console.log('DONE');
+};
+
+export const getCategoriesAndDocuments = async () => {
+	const collectionRef = collection(db, 'categories'); // referencing
+	const q = query(collectionRef); // have to query collection Ref
+	const querySnapshot = await getDocs(q); // executes query and return result in form of promise
+	const categoryMap = querySnapshot.docs.reduce(
+		(acc, docSnapshot) => {
+			const { title, items } = docSnapshot.data();
+			acc[
+				title.toLowerCase() as keyof {
+					title: string;
+				}
+			] = items;
+			return acc;
+		},
+		{ title: '' }
+	); // shaping SnapShot into final object
+
+	return categoryMap;
+
+	// return querySnapshot.docs.map((docSnapshot) => docSnapshot.data()); // returning data
+
+	// return querySnapshot.docs.map((docSnapshot) => {
+	// 	const { title, items } = docSnapshot.data();
+	// 	return { title: title, items: items };
+	// }); // returning data
 };
 
 // user sign-in with google account

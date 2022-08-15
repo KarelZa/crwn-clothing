@@ -1,14 +1,14 @@
 import React from 'react';
 import { useMediaQuery } from '@mui/material';
 import ProductCard from '../../components/productCard/ProductCard';
-import { useProductContext } from '../../contexts/product.context';
+import { useCategoriesContext } from '../../contexts/categories.context';
 import { theme } from '../../styles/appTheme/theme';
 import { StyledGridContainer } from '../../styles/shared/gridContainer';
 
 type ShopProps = {};
 
 const Shop = (props: ShopProps) => {
-	const { products } = useProductContext();
+	const { categoriesMap } = useCategoriesContext();
 	return (
 		<StyledGridContainer
 			gridTemplateCol={`repeat(auto-fit, minmax(${
@@ -18,8 +18,9 @@ const Shop = (props: ShopProps) => {
 			colGap='20px'
 		>
 			{/* <h2>WELCOME {currentUser?.displayName}</h2> */}
-			{products.map((product) => (
-				<ProductCard key={product.id} product={product} />
+
+			{categoriesMap.map((product) => (
+				<ProductCard key={product.items.id} product={product.items} />
 			))}
 		</StyledGridContainer>
 	);
