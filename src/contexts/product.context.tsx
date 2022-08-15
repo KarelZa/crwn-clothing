@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { addCollectionAndDocuments } from '../utils/firebase/firebase';
 import Product from '../model/product.model';
-import SHOP_DATA from '../shop-data.json';
+import SHOP_DATA from '../shop-data.js';
 
 interface Props {
 	children: React.ReactNode;
@@ -12,7 +13,12 @@ interface ProductContextProps {
 export const ProductContext = createContext<ProductContextProps | undefined>(undefined);
 
 const ProductContextProvider = ({ children }: Props) => {
-	const [products, setProducts] = useState(SHOP_DATA);
+	const [products, setProducts] = useState([]);
+
+	// Batch data from shop-data.js file into firestore db
+	// useEffect(() => {
+	// 	addCollectionAndDocuments('categories', SHOP_DATA);
+	// }, []);
 
 	const contextValue = { products };
 	return <ProductContext.Provider value={contextValue}>{children}</ProductContext.Provider>;

@@ -13,7 +13,7 @@ import {
 } from 'firebase/auth';
 // doc ==> to get document instance
 // getDoc,setDoc ==> to get / set doc data
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from 'firebase/firestore';
 
 // Firebase web-app configuration
 const firebaseConfig = {
@@ -36,6 +36,34 @@ googleProvider.setCustomParameters({
 
 export const auth = getAuth(); // Auth instance innit
 export const db = getFirestore(); // instance of db in firestore
+
+// creating and writting into Collection inside FireStore
+// colectionKey = name / id of the collection
+// objectsToAdd = actual objects to add into specific collection
+export const addCollectionAndDocuments = async (
+	collectionKey: string,
+	objectsToAdd: {
+		title: string;
+		items: { id: number; name: string; imageUrl: string; price: number }[];
+	}[]
+) => {
+	const collectionRef = collection(db, collectionKey); // referencing
+	// concept of transation --> batching entries
+	const batch = writeBatch(db);
+	// looping over objects in shop-data.js
+	objectsToAdd.forEach(
+		(object: {
+			title: string;
+			items: { id: number; name: string; imageUrl: string; price: number }[];
+		}) => {
+			const docRef = doc(collectionRef, object.title.toLowerCase());
+			batch.set(docRef, object); // if given docReference does not exist in the collection it creates it
+		}
+	);
+
+	await batch.commit();
+	console.log('DONE');
+};
 
 // user sign-in with google account
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
