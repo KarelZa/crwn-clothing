@@ -9,7 +9,7 @@ import {
 	createUserDocFromAuth,
 	signInAuthUserWithEmailAndPassword,
 	signInWithGooglePopup,
-} from '../../utils/firebase/firebase';
+} from '../../utils/firebase/firebaseInJS';
 import { StyledFlexContainer } from '../../styles/shared/flexContainer';
 
 export interface SignInFormProps {

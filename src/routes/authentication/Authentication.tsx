@@ -1,6 +1,5 @@
-import { useMediaQuery } from '@mui/material';
-import { Container } from '@mui/system';
 import React from 'react';
+import { useMediaQuery } from '@mui/material';
 import SignInForm from '../../components/sign-in-form/SignInForm';
 import SignUpForm from '../../components/sign-up-form/SignUpForm';
 import { theme } from '../../styles/appTheme/theme';

@@ -14,6 +14,7 @@ export const StyledGridContainer = styled('div', {
 	gridTemplateColumns: otherProps.gridTemplateCol || '1',
 	rowGap: otherProps.rowGap || '0',
 	columnGap: otherProps.colGap || '0',
+	// gridTemplateRows: 'repeat(auto-fill, 200px)',
 
 	[theme.breakpoints.up('sm')]: {},
 	[theme.breakpoints.up('md')]: {},

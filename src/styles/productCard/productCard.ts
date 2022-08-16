@@ -16,7 +16,7 @@ export const StyledProductCard = styled('div', {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		height: '100%',
+		height: '350px',
 		alignItems: 'center',
 		'&:hover ': {
 			img: {

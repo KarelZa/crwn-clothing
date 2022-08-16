@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import {
 	createAuthUserWithEmailAndPassword,
 	createUserDocFromAuth,
-} from '../../utils/firebase/firebase';
+} from '../../utils/firebase/firebaseInJS';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomInput from './CustomInput';

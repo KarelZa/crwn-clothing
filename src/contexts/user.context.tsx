@@ -1,7 +1,7 @@
 import { Auth, User, UserCredential } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { createUserDocFromAuth, onAuthStateChangedListener } from '../utils/firebase/firebase';
+import { createUserDocFromAuth, onAuthStateChangedListener } from '../utils/firebase/firebaseInJS';
 
 type Props = { children: React.ReactNode };
 interface UserContextProps {

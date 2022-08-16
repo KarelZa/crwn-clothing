@@ -11,13 +11,14 @@ export const StyledCartItem = styled('div')<StyledCartItemProps>(({ theme }) => 
 	alignItems: 'center',
 
 	'& .cart-item-img': {
-		width: '150px',
+		width: '120px',
 		display: 'flex',
 		alignItems: 'center',
+		// height: '80px',
 		img: {
-			padding: '.5rem',
-			width: '100%',
-			borderRadius: '16px',
+			// padding: 'rem',
+			width: '90%',
+			borderRadius: '6px',
 		},
 	},
 

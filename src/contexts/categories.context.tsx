@@ -1,5 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { addCollectionAndDocuments, getCategoriesAndDocuments } from '../utils/firebase/firebase';
+import {
+	addCollectionAndDocuments,
+	getCategoriesAndDocuments,
+} from '../utils/firebase/firebaseInJS';
 import Product from '../model/product.model';
 import SHOP_DATA from '../shop-data.js';
 
@@ -8,20 +11,14 @@ interface Props {
 }
 
 interface CategoriesContextProps {
-	categories: {
-		title: string;
-		items: Product[];
-	}[];
+	[key: string]: {
+		[key: string]: Product[];
+	};
 }
 export const CategoriesContext = createContext<CategoriesContextProps | undefined>(undefined);
 
 const CategoriesContextProvider = ({ children }: Props) => {
-	const [categories, setCategories] = useState<
-		{
-			title: string;
-			items: Product[];
-		}[]
-	>([]);
+	const [categories, setCategories] = useState({});
 
 	// Batch data from shop-data.js file into firestore db
 	// useEffect(() => {

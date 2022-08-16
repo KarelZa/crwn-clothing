@@ -50,6 +50,7 @@ export const StyledCartDropdown = styled('div', {
 		maxHeight: '400px',
 		display: 'flex',
 		flexDirection: 'column',
+		gap: '2rem',
 		overflowY: 'auto',
 		scrollbarWidth: countOfItems > 3 ? '' : 'none', // edge,chrome
 		'&::-webkit-scrollbar': {
