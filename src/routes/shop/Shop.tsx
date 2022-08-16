@@ -8,7 +8,7 @@ import { StyledGridContainer } from '../../styles/shared/gridContainer';
 type ShopProps = {};
 
 const Shop = (props: ShopProps) => {
-	const { categoriesMap } = useCategoriesContext();
+	const { categories } = useCategoriesContext();
 	return (
 		<StyledGridContainer
 			gridTemplateCol={`repeat(auto-fit, minmax(${
@@ -19,9 +19,9 @@ const Shop = (props: ShopProps) => {
 		>
 			{/* <h2>WELCOME {currentUser?.displayName}</h2> */}
 
-			{categoriesMap.map((product) => (
-				<ProductCard key={product.items.id} product={product.items} />
-			))}
+			{categories.map((category) =>
+				category.items.map((item) => <ProductCard key={category.title} product={item} />)
+			)}
 		</StyledGridContainer>
 	);
 };

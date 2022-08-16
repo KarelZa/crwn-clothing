@@ -8,15 +8,20 @@ interface Props {
 }
 
 interface CategoriesContextProps {
-	categoriesMap: {
+	categories: {
 		title: string;
-		items: Product;
+		items: Product[];
 	}[];
 }
 export const CategoriesContext = createContext<CategoriesContextProps | undefined>(undefined);
 
 const CategoriesContextProvider = ({ children }: Props) => {
-	const [categoriesMap, setCategoriesMap] = useState([]);
+	const [categories, setCategories] = useState<
+		{
+			title: string;
+			items: Product[];
+		}[]
+	>([]);
 
 	// Batch data from shop-data.js file into firestore db
 	// useEffect(() => {
@@ -27,12 +32,14 @@ const CategoriesContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		const getCategoriesMap = async () => {
 			const categoryMap = await getCategoriesAndDocuments();
-			console.log(categoryMap);
+			setCategories(categoryMap);
 		};
 		getCategoriesMap();
 	}, []);
 
-	const contextValue = { categoriesMap };
+	console.log(categories);
+
+	const contextValue = { categories };
 	return <CategoriesContext.Provider value={contextValue}>{children}</CategoriesContext.Provider>;
 };
 

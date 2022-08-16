@@ -24,6 +24,7 @@ import {
 	getDocs,
 } from 'firebase/firestore';
 import { string } from 'yup/lib/locale';
+import Product from '../../model/product.model';
 
 // Firebase web-app configuration
 const firebaseConfig = {
@@ -79,27 +80,33 @@ export const getCategoriesAndDocuments = async () => {
 	const collectionRef = collection(db, 'categories'); // referencing
 	const q = query(collectionRef); // have to query collection Ref
 	const querySnapshot = await getDocs(q); // executes query and return result in form of promise
-	const categoryMap = querySnapshot.docs.reduce(
-		(acc, docSnapshot) => {
-			const { title, items } = docSnapshot.data();
-			acc[
-				title.toLowerCase() as keyof {
-					title: string;
-				}
-			] = items;
-			return acc;
-		},
-		{ title: '' }
-	); // shaping SnapShot into final object
+	// const categoryMap = querySnapshot.docs.reduce(
+	// 	(acc, docSnapshot) => {
+	// 		const { title, items } = docSnapshot.data();
+	// 		acc[
+	// 			title.toLowerCase() as keyof {
+	// 				title: string;
+	// 			}
+	// 		] = items;
+	// 		return acc;
+	// 	},
+	// 	{ }
+	// ); // shaping SnapShot into final object
 
-	return categoryMap;
+	// return categoryMap;
 
-	// return querySnapshot.docs.map((docSnapshot) => docSnapshot.data()); // returning data
+	// return querySnapshot.docs.map(
+	// 	(docSnapshot) =>
+	// 		docSnapshot.data() as {
+	// 			title: string;
+	// 			items: Product;
+	// 		}
+	// ); // returning data
 
-	// return querySnapshot.docs.map((docSnapshot) => {
-	// 	const { title, items } = docSnapshot.data();
-	// 	return { title: title, items: items };
-	// }); // returning data
+	return querySnapshot.docs.map((docSnapshot) => {
+		const { title, items } = docSnapshot.data();
+		return { title: title, items: items };
+	}); // returning data
 };
 
 // user sign-in with google account
