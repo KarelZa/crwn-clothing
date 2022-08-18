@@ -10,13 +10,14 @@ export const StyledProductCard = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
+	height: 'auto',
 
 	'& .product-card-image': {
 		position: 'relative',
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		height: '350px',
+		height: '190px',
 		alignItems: 'center',
 		'&:hover ': {
 			img: {
@@ -54,10 +55,19 @@ export const StyledProductCard = styled('div', {
 		alignItems: 'center',
 	},
 
-	[theme.breakpoints.up('sm')]: {},
+	[theme.breakpoints.up('sm')]: {
+		'& .product-card-image': {
+			height: '280px',
+
+			'& button': {
+				height: '55px',
+			},
+		},
+	},
 
 	[theme.breakpoints.up('md')]: {
 		'& .product-card-image': {
+			height: '330px',
 			'& button': {
 				height: '55px',
 			},

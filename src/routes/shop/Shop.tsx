@@ -1,22 +1,16 @@
 import React from 'react';
-import { useMediaQuery } from '@mui/material';
-import ProductCard from '../../components/productCard/ProductCard';
-import { useCategoriesContext } from '../../contexts/categories.context';
-import { theme } from '../../styles/appTheme/theme';
-import { StyledGridContainer } from '../../styles/shared/gridContainer';
-import CategoryPreview from '../../components/category-preview/CategoryPreview';
+import { Route, Routes } from 'react-router-dom';
+import CategoriesPreview from '../categories-preview/CategoriesPreview';
+import Category from '../category/Category';
 
 type ShopProps = {};
 
 const Shop = (props: ShopProps) => {
-	const { categories } = useCategoriesContext();
 	return (
-		<div>
-			{Object.keys(categories).map((title) => {
-				const products = categories[title];
-				return <CategoryPreview key={title} title={title} products={products} />;
-			})}
-		</div>
+		<Routes>
+			<Route index element={<CategoriesPreview />} />
+			<Route path=':category' element={<Category />} />
+		</Routes>
 	);
 };
 
