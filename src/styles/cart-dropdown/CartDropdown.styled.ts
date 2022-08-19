@@ -18,7 +18,7 @@ export const StyledCartDropdown = styled('div', {
 	borderRadius: '6px',
 	position: 'relative',
 	// position: 'absolute',
-	// width: '400px',
+	width: '400px',
 	// right: '-7px',
 	// top: 0,
 	'&:before': {

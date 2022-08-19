@@ -23,8 +23,7 @@ const CategoryPreview = ({ title, products }: CategoryPreviewProps) => {
 				</Typography>
 				<Divider
 					orientation='vertical'
-					light
-					color='black'
+					color='grey'
 					role='presentation'
 					flexItem
 					sx={{ my: 0.7 }}

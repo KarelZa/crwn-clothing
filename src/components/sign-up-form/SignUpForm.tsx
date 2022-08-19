@@ -1,14 +1,11 @@
 import { useForm } from 'react-hook-form';
-import {
-	createAuthUserWithEmailAndPassword,
-	createUserDocFromAuth,
-} from '../../utils/firebase/firebaseInJS';
+import { createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebaseInJS';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomInput from './CustomInput';
 import { StyledContainer } from '../../styles/sign-up-form/signUpContainer';
-import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
 import { StyledButton } from '../../styles/shared/button';
+import { StyledForm } from '../../styles/sign-up-form/signUpForm';
 
 export interface SignUpFormProps {
 	displayName: string;
@@ -55,7 +52,7 @@ const SignUpForm = () => {
 		<StyledContainer flexDir='column'>
 			<h2>Don't have an account?</h2>
 			<span>Sign Up With your email & password</span>
-			<StyledSignUpForm onSubmit={handleSubmit(formSubmitHandler)} flexDir='column'>
+			<StyledForm onSubmit={handleSubmit(formSubmitHandler)} flexDir='column'>
 				<CustomInput
 					name='displayName'
 					label='Display Name'
@@ -87,7 +84,7 @@ const SignUpForm = () => {
 				>
 					Sign In
 				</StyledButton>
-			</StyledSignUpForm>
+			</StyledForm>
 		</StyledContainer>
 	);
 };

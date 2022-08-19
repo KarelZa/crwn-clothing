@@ -1,11 +1,13 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
 import { Outlet, Link } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import CartIcon from '../../components/cart-icon/CartIcon';
 import { useUserContext } from '../../contexts/user.context';
+import { StyledNavigation } from '../../styles/navigation/Navigation.styled';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
 
-import './navigation.styles.scss';
+// import './navigation.styles.scss';
 
 type NavigationProps = {};
 
@@ -14,26 +16,26 @@ const Navigation = (props: NavigationProps) => {
 
 	return (
 		<>
-			<div className='navigation'>
+			<StyledNavigation>
 				<Link className='logo' to='/'>
 					<CrwnLogo className='logo' />
 				</Link>
 				<div className='nav-links'>
-					<Link className='nav-link' to='/shop'>
-						Shop
-					</Link>
+					<Typography variant='h6' component={'span'}>
+						<Link to='/shop'>Shop</Link>
+					</Typography>
 					{currentUser ? (
-						<span className='nav-link' onClick={signOutCurrentUser}>
+						<Typography variant='h6' onClick={signOutCurrentUser} component={'span'}>
 							Sign Out
-						</span>
+						</Typography>
 					) : (
-						<Link className='nav-link' to='/auth'>
-							Sign In
-						</Link>
+						<Typography variant='h6' component={'span'}>
+							<Link to='/auth'>Sign In</Link>
+						</Typography>
 					)}
 					<CartIcon />
 				</div>
-			</div>
+			</StyledNavigation>
 			<Outlet />
 		</>
 	);

@@ -34,8 +34,6 @@ const CategoriesContextProvider = ({ children }: Props) => {
 		getCategoriesMap();
 	}, []);
 
-	console.log(categories);
-
 	const contextValue = { categories };
 	return <CategoriesContext.Provider value={contextValue}>{children}</CategoriesContext.Provider>;
 };

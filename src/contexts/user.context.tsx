@@ -1,5 +1,4 @@
-import { Auth, User, UserCredential } from 'firebase/auth';
-import firebase from 'firebase/compat/app';
+import { User } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { createUserDocFromAuth, onAuthStateChangedListener } from '../utils/firebase/firebaseInJS';
 
@@ -9,13 +8,7 @@ interface UserContextProps {
 	setCurrentUser: (user: User | null) => void;
 }
 
-export const UserContext = createContext<UserContextProps | undefined>(
-	undefined
-	// 	{
-	// 	currentUser: null,
-	// 	setCurrentUser: (user: User | null) => {},
-	// }
-);
+export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 const UserContextProvider = ({ children }: Props) => {
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -28,7 +21,7 @@ const UserContextProvider = ({ children }: Props) => {
 			} else {
 				setCurrentUser(null);
 			}
-			console.log(user);
+			// console.log(user);
 		});
 
 		return unsubscribe;

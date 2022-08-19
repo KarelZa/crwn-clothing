@@ -5,13 +5,11 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useCartContext } from '../../contexts/cart.context';
 import { StyledButton } from '../../styles/shared/button';
-import { StyledSignUpForm } from '../../styles/sign-up-form/signUpForm';
 import CustomInput from '../sign-up-form/CustomInput';
 import { useForm } from 'react-hook-form';
-import { TbTruckDelivery } from 'react-icons/tb';
 import { StyledSidebar } from '../../styles/checkout-sidebar/CheckoutSidebar.styled';
 import DeliveryWidget from '../delivery-widget/DeliveryWidget';
-
+import { StyledForm } from '../../styles/sign-up-form/signUpForm';
 interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
 }
@@ -64,7 +62,7 @@ const CheckoutSidebar = () => {
 							<Typography component={'h6'} variant='overline'>
 								Gift / Discount Code
 							</Typography>
-							<StyledSignUpForm onSubmit={handleSubmit(formSubmitHandler)}>
+							<StyledForm onSubmit={handleSubmit(formSubmitHandler)}>
 								<CustomInput
 									name='discountCode'
 									control={control}
@@ -81,7 +79,7 @@ const CheckoutSidebar = () => {
 								>
 									USE
 								</StyledButton>
-							</StyledSignUpForm>
+							</StyledForm>
 						</>
 					)}
 				</div>
