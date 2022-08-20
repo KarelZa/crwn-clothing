@@ -20,6 +20,7 @@ interface ShoppingCartContextProps {
 	activateDiscount: (value: number) => void;
 	cartItemsPrice: number;
 	freeDeliveryThreshold: number;
+	cartItemsCount: number;
 }
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
@@ -28,6 +29,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 	const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 	const [cartItemsPrice, setCartItemsPrice] = useState(0);
+	const [cartItemsCount, setCartItemsCount] = useState(0);
 	const [discount, setDiscount] = useState({
 		isActivated: false,
 		discountAmount: 0,
@@ -46,6 +48,12 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 			: cartItems.reduce((accu, curr) => accu + curr.price * curr.quantity, 0);
 		setCartItemsPrice(+productsPrice);
 	}, [cartItems, discount]);
+
+	// Count of price of items inside the cart, with or without discount
+	useEffect(() => {
+		const countOfItems = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+		setCartItemsCount(countOfItems);
+	}, [cartItems]);
 
 	// Toggler for Quick Cart View
 	const openDropDown = () => {
@@ -114,6 +122,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 		discount,
 		activateDiscount,
 		cartItemsPrice,
+		cartItemsCount,
 		freeDeliveryThreshold,
 	};
 

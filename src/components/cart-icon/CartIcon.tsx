@@ -11,13 +11,12 @@ import { Backdrop, Paper } from '@mui/material';
 interface cartIconProps {}
 
 const CartIcon = (props: cartIconProps) => {
-	const { cartItems } = useCartContext();
-	const countOfItems = cartItems.reduce((accu, curr) => accu + curr.quantity, 0);
+	const { cartItemsCount } = useCartContext();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const popupState = usePopupState({
 		variant: 'popper',
-		popupId: countOfItems > 0 ? 'cartPopper' : null,
+		popupId: cartItemsCount > 0 ? 'cartPopper' : null,
 		disableAutoFocus: true,
 	});
 	// TouchDevice Simple Detection
@@ -33,10 +32,10 @@ const CartIcon = (props: cartIconProps) => {
 		<>
 			<StyledCartIcon {...bindHover(popupState)} onClick={goToCheckoutHandler}>
 				<ShoppingCartIcon />
-				<span>{countOfItems}</span>
+				<span>{cartItemsCount}</span>
 			</StyledCartIcon>
 
-			{!myFlag && countOfItems > 0 && location.pathname !== '/checkout' && (
+			{!myFlag && cartItemsCount > 0 && location.pathname !== '/checkout' && (
 				<>
 					<Popper
 						{...bindPopper(popupState)}
@@ -54,12 +53,7 @@ const CartIcon = (props: cartIconProps) => {
 							</Fade>
 						)}
 					</Popper>
-					<Backdrop
-						sx={{ color: '#fff', zIndex: 5 }}
-						open={popupState.isOpen}
-						// invisible={popupState.isOpen === true ? false : true}
-						// onClick={() => popupState.setOpen(false)}
-					/>
+					<Backdrop sx={{ color: '#fff', zIndex: 5 }} open={popupState.isOpen} />
 				</>
 			)}
 		</>
