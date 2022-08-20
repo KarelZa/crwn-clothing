@@ -19,8 +19,8 @@ const userReducer = (
 	state: { currentUser: User | null },
 	action: { type: USER_ACTION_TYPES.SET_CURRENT_USER; payload?: any }
 ) => {
-	console.log('Dispatched');
-	console.log(action);
+	// console.log('Dispatched');
+	// console.log(action);
 
 	const { type, payload } = action;
 
@@ -43,7 +43,7 @@ const UserContextProvider = ({ children }: Props) => {
 	// const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
 	const { currentUser } = state;
-	console.log(state);
+	// console.log(state);
 
 	const setCurrentUser = (user: User | null) => {
 		dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });

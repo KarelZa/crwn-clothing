@@ -13,9 +13,9 @@ type CheckoutItemProps = {
 
 const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 	const { imageUrl, name, price, quantity } = checkoutItem;
-	const { addToCart, removeFromCart, decreaseCartItemQty } = useCartContext();
+	const { addToCart, removeFromCart, decreaseItemQtyInCart } = useCartContext();
 
-	const decreaseItemQtyHandler = () => decreaseCartItemQty(checkoutItem);
+	const decreaseItemQtyHandler = () => decreaseItemQtyInCart(checkoutItem);
 	const increaseItemQtyHandler = () => addToCart(checkoutItem);
 	const removeItemHandler = () => removeFromCart(checkoutItem);
 

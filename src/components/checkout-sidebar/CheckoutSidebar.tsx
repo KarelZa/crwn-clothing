@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { BaseSyntheticEvent } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Divider from '@mui/material/Divider';
@@ -23,6 +23,9 @@ const CheckoutSidebar = () => {
 	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } = useCartContext();
 	const deliveryPrice = 89;
 
+	console.log(discount);
+	console.log(cartItemsPrice);
+
 	const { control, handleSubmit, reset } = useForm({
 		resolver: yupResolver(schema),
 		mode: 'onSubmit',
@@ -30,10 +33,10 @@ const CheckoutSidebar = () => {
 
 	const formSubmitHandler = (data: CheckoutSidebarProps) => {
 		if (data.discountCode === '#today15') {
-			activateDiscount(0.85);
+			activateDiscount(!discount.isActivated, 0.85);
 			reset();
 		} else if (data.discountCode === '#today20') {
-			activateDiscount(0.8);
+			activateDiscount(!discount.isActivated, 0.8);
 			reset();
 		}
 	};
@@ -52,7 +55,7 @@ const CheckoutSidebar = () => {
 								component={'span'}
 								variant='button'
 								fontWeight={800}
-								onClick={() => activateDiscount(0)}
+								onClick={() => activateDiscount(!discount.isActivated, 0)}
 							>
 								&#10006;
 							</Typography>
@@ -111,7 +114,7 @@ const CheckoutSidebar = () => {
 						<Typography component={'span'} variant='body1' fontWeight={800}>
 							{cartItemsPrice >= freeDeliveryThreshold
 								? `${cartItemsPrice} CZK`
-								: `${cartItemsPrice + deliveryPrice} CZK`}
+								: `${+cartItemsPrice + deliveryPrice} CZK`}
 						</Typography>
 					</div>
 				</div>
