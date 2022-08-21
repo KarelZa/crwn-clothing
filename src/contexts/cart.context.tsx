@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
 import CartItem from '../model/cartItem.model';
 import Product from '../model/product.model';
+import { createAction } from '../utils/reducer/reducer';
 
 interface Props {
 	children: React.ReactNode;
@@ -23,9 +24,15 @@ interface ShoppingCartContextProps {
 	cartItemsCount: number;
 	dispatch: React.Dispatch<any>;
 }
+
 // default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
 
+/**
+ * HELPER FCE -> Adds item into cart
+ * @param {CartItem[]}  cartItems - array of items
+ * @param {Product}  productToAdd - product to be added into cart
+ */
 const addCartItem = (cartItems: CartItem[], productToAdd: Product) => {
 	const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
@@ -40,23 +47,33 @@ const addCartItem = (cartItems: CartItem[], productToAdd: Product) => {
 	}
 };
 
-const decreaseCartItem = (cartItems: CartItem[], cartItemToRemove: Product) => {
+/**
+ * HELPER FCE -> decreases item quantity inside cart
+ * @param {CartItem[]}  cartItems - array of items
+ * @param {Product}  cartItemToDecreaseQty - product inside cart that's quantity will be decreased
+ */
+const decreaseCartItem = (cartItems: CartItem[], cartItemToDecreaseQty: Product) => {
 	// find the cart item to remove
-	const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id);
+	const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToDecreaseQty.id);
 
 	// check if quantity is equal to 1, if it is remove that item from the cart
 	if (existingCartItem?.quantity === 1) {
-		return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
+		return cartItems.filter((cartItem) => cartItem.id !== cartItemToDecreaseQty.id);
 	}
 
 	// return back cartitems with matching cart item with reduced quantity
 	return cartItems.map((cartItem) =>
-		cartItem.id === cartItemToRemove.id
+		cartItem.id === cartItemToDecreaseQty.id
 			? { ...cartItem, quantity: cartItem.quantity - 1 }
 			: cartItem
 	);
 };
 
+/**
+ * HELPER FCE -> removes item from cart
+ * @param {CartItem[]}  cartItems - array of items
+ * @param {Product}  cartItemToRemove - product inside cart that will be removed
+ */
 const clearCartItem = (cartItems: CartItem[], cartItemToRemove: Product) =>
 	cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
 
@@ -110,49 +127,74 @@ const INITIAL_STATE = {
 	},
 };
 
+/**
+ * This component makes the ShoppingCartContext available down the React tree. It should preferably be used at the root of your component tree.
+ */
 const ShoppingCartContextProvider = ({ children }: Props) => {
-	const freeDeliveryThreshold = 1200;
 	const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 	const { cartItems, cartItemsPrice, cartItemsCount, isCartOpened, discount } = state;
+	const freeDeliveryThreshold = 1200;
 
+	/**
+	 * REDUCER FCE -> Updates array of items and its count
+	 * @param {CartItem[]}  cartItems - array of items
+	 */
 	const updateCartItemsReducer = (cartItems: CartItem[]) => {
 		const countOfItems = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
 
-		dispatch({
-			type: CART_ACTION_TYPES.SET_CART_ITEMS,
-			payload: {
+		dispatch(
+			createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
 				cartItems: cartItems,
 				cartItemsCount: countOfItems,
-			},
-		});
+			})
+		);
 	};
 
+	/**
+	 * Adds item into cart
+	 * @param {Product}  productToAdd - product to be added
+	 */
 	const addToCart = (productToAdd: Product) => {
 		const newCartItems = addCartItem(cartItems, productToAdd);
 		updateCartItemsReducer(newCartItems);
 	};
 
+	/**
+	 * Decreases qty of item inside cart
+	 * @param {Product}  cartItemToDecrease - product to be decreased
+	 */
 	const decreaseItemQtyInCart = (cartItemToDecrease: Product) => {
 		const newCartItems = decreaseCartItem(cartItems, cartItemToDecrease);
 		updateCartItemsReducer(newCartItems);
 	};
 
+	/**
+	 * Removes item from cart
+	 * @param {Product}  cartItemToRemove - product to be removed from cart
+	 */
 	const removeFromCart = (cartItemToRemove: Product) => {
 		const newCartItems = clearCartItem(cartItems, cartItemToRemove);
 		updateCartItemsReducer(newCartItems);
 	};
 
+	/**
+	 * * REDUCER FCE -> Activates discount for items inside cart
+	 * @param {boolean}  bool - false/true to deactivate/activate discount
+	 * @param {number}  value - value of the discount
+	 */
 	const activateDiscount = (bool: boolean, value: number) => {
-		dispatch({
-			type: CART_ACTION_TYPES.SET_DISCOUNT,
-			payload: {
+		dispatch(
+			createAction(CART_ACTION_TYPES.SET_DISCOUNT, {
 				isActivated: bool,
 				discountAmount: value,
-			},
-		});
+			})
+		);
 	};
 
-	const calcCartItemsPriceReducer = useCallback(() => {
+	/**
+	 * * REDUCER FCE -> Calculates total price of items inside cart
+	 */
+	const calcCartItemsPrice = useCallback(() => {
 		const productsPrice = discount?.isActivated
 			? (
 					cartItems.reduce(
@@ -165,21 +207,20 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 					0
 			  );
 
-		dispatch({
-			type: CART_ACTION_TYPES.SET_CART_ITEMS_PRICE,
-			payload: {
-				cartItemsPrice: productsPrice,
-			},
-		});
+		dispatch(
+			createAction(CART_ACTION_TYPES.SET_CART_ITEMS_PRICE, { cartItemsPrice: productsPrice })
+		);
 	}, [cartItems, discount]);
 
 	useEffect(() => {
-		calcCartItemsPriceReducer();
-	}, [calcCartItemsPriceReducer]);
+		calcCartItemsPrice();
+	}, [calcCartItemsPrice]);
 
-	// Toggler for Quick Cart View
+	/**
+	 * * REDUCER FCE -> Toggler for visibility of the cart dropdown --> not used yet
+	 */
 	const openDropDown = (bool: boolean) => {
-		dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: bool });
+		dispatch(createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, { bool }));
 	};
 
 	const contextValue = {
@@ -202,7 +243,9 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 	);
 };
 
-// custom Hook with context ( checks for undefined if not used inside correct provider)
+/**
+ * * custom Hook for context API ( throws error if not used inside correct provider)
+ */
 function useCartContext() {
 	const context = useContext(ShoppingCartContext);
 	if (context === undefined) {
