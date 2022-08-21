@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent } from 'react';
+import React from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Divider from '@mui/material/Divider';
@@ -22,9 +22,6 @@ const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
 const CheckoutSidebar = () => {
 	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } = useCartContext();
 	const deliveryPrice = 89;
-
-	console.log(discount);
-	console.log(cartItemsPrice);
 
 	const { control, handleSubmit, reset } = useForm({
 		resolver: yupResolver(schema),

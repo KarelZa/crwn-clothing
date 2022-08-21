@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import CheckoutItem from '../../components/checkout-item/CheckoutItem';
-import { useCartContext } from '../../contexts/cart.context';
+import { CART_ACTION_TYPES, useCartContext } from '../../contexts/cart.context';
 import { StyledCheckout, StyledEmptyCheckout } from '../../styles/checkout/Checkout.styled';
 import CheckoutSidebar from '../../components/checkout-sidebar/CheckoutSidebar';
 import { StyledButton } from '../../styles/shared/button';
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-	const { cartItems } = useCartContext();
+	const { cartItems, dispatch } = useCartContext();
 	let navigate = useNavigate();
 	const routeChangeHandler = () => {
 		let path = `/shop`;
 		navigate(path);
 	};
+
+	useEffect(() => {
+		return () => {
+			if (cartItems.length === 0) {
+				dispatch({
+					type: CART_ACTION_TYPES.SET_DISCOUNT,
+					payload: {
+						isActivated: false,
+						discountAmount: 0,
+					},
+				});
+			}
+		};
+	}, [cartItems.length, dispatch]);
 
 	return (
 		<>
