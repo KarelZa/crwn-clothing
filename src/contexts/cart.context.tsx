@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
 import CartItem from '../model/cartItem.model';
 import Product from '../model/product.model';
-import { createAction } from '../utils/reducer/reducer';
+import { createAction } from '../utils/reducer/reducer.utils';
 
 interface Props {
 	children: React.ReactNode;
@@ -25,7 +25,6 @@ interface ShoppingCartContextProps {
 	dispatch: React.Dispatch<any>;
 }
 
-// default values of context
 export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
 
 /**
@@ -84,6 +83,7 @@ export enum CART_ACTION_TYPES {
 	SET_DISCOUNT = 'set_discount',
 }
 
+// cart reducer
 const cartReducer = (state: any, action: any) => {
 	const { type, payload } = action;
 	// console.log(action);
@@ -244,7 +244,7 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 };
 
 /**
- * * custom Hook for context API ( throws error if not used inside correct provider)
+ * Custom Hook for cart context API ( throws error if not used inside correct provider)
  */
 function useCartContext() {
 	const context = useContext(ShoppingCartContext);
