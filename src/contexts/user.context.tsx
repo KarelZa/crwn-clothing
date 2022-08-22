@@ -10,7 +10,10 @@ interface UserContextProps {
 	setCurrentUser: (user: User | null) => void;
 }
 
-export const UserContext = createContext<UserContextProps | undefined>(undefined);
+const UserContext = createContext<UserContextProps>({
+	currentUser: null,
+	setCurrentUser: () => {},
+});
 
 export enum USER_ACTION_TYPES {
 	SET_CURRENT_USER = 'set_current_user',
@@ -76,12 +79,12 @@ const UserContextProvider = ({ children }: Props) => {
 /**
  * Custom Hook for user context API ( throws error if not used inside correct provider)
  */
-const useUserContext = () => {
-	const context = useContext(UserContext);
-	if (context === undefined) {
-		throw new Error('useUserContext must be used within a UserContextProvider');
-	}
-	return context;
-};
+// const useUserContext = () => {
+// 	const context = useContext(UserContext);
+// 	if (context === undefined) {
+// 		throw new Error('useUserContext must be used within a UserContextProvider');
+// 	}
+// 	return context;
+// };
 
-export { UserContextProvider, useUserContext };
+export { UserContextProvider, UserContext };

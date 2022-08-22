@@ -1,6 +1,6 @@
+import React from 'react';
 import Typography from '@mui/material/Typography';
-import React, { useContext } from 'react';
-import { ShoppingCartContext, useCartContext } from '../../contexts/cart.context';
+import { useCartContext } from '../../contexts/cart.context';
 import Product from '../../model/product.model';
 import { StyledProductCard } from '../../styles/productCard/productCard';
 import { StyledButton } from '../../styles/shared/button';

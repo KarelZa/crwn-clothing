@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import Typography from '@mui/material/Typography';
 import { Outlet, Link } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import CartIcon from '../../components/cart-icon/CartIcon';
-import { useUserContext } from '../../contexts/user.context';
 import { StyledNavigation } from '../../styles/navigation/Navigation.styled';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
-
-// import './navigation.styles.scss';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../store/user/user.selector';
 
 type NavigationProps = {};
 
 const Navigation = (props: NavigationProps) => {
-	const { currentUser } = useUserContext();
-
+	const currentUser = useSelector(selectCurrentUser);
 	return (
 		<>
 			<StyledNavigation>
