@@ -8,24 +8,28 @@ import { UserContextProvider } from './contexts/user.context';
 import { ThemeProvider } from '@mui/system';
 import { theme } from './styles/appTheme/theme';
 import { CategoriesContextProvider } from './contexts/categories.context';
+import { Provider } from 'react-redux';
 import { responsiveFontSizes } from '@mui/material';
 import { ShoppingCartContextProvider } from './contexts/cart.context';
+import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-	// <React.StrictMode>
-	<BrowserRouter>
-		<ThemeProvider theme={responsiveFontSizes(theme)}>
-			<UserContextProvider>
-				<CategoriesContextProvider>
-					<ShoppingCartContextProvider>
-						<App />
-					</ShoppingCartContextProvider>
-				</CategoriesContextProvider>
-			</UserContextProvider>
-		</ThemeProvider>
-	</BrowserRouter>
-	// </React.StrictMode>
+	<React.StrictMode>
+		<Provider store={store}>
+			<BrowserRouter>
+				<ThemeProvider theme={responsiveFontSizes(theme)}>
+					<UserContextProvider>
+						<CategoriesContextProvider>
+							<ShoppingCartContextProvider>
+								<App />
+							</ShoppingCartContextProvider>
+						</CategoriesContextProvider>
+					</UserContextProvider>
+				</ThemeProvider>
+			</BrowserRouter>
+		</Provider>
+	</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

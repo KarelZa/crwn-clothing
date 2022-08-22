@@ -27,7 +27,7 @@ const userReducer = (
 		case USER_ACTION_TYPES.SET_CURRENT_USER:
 			return {
 				...state, // Previous values
-				currentUser: payload, // Modification
+				...payload, // Modification
 			};
 		default:
 			throw new Error(`Unhandled Type ${type} in userReducer`);
@@ -51,7 +51,8 @@ const UserContextProvider = ({ children }: Props) => {
 	 * @param {User | null}  user - user object
 	 */
 	const setCurrentUser = (user: User | null) => {
-		dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, { user }));
+		dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, { currentUser: user }));
+		// dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
 	};
 
 	// handling side effects
