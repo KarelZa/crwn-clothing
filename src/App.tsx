@@ -23,6 +23,7 @@ function App() {
 
 		return unsubscribe;
 	}, [dispatch]);
+
 	return (
 		<Container maxWidth='lg'>
 			<Routes>

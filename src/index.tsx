@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/system';
 import { theme } from './styles/appTheme/theme';
-import { CategoriesContextProvider } from './contexts/categories.context';
 import { Provider } from 'react-redux';
 import { responsiveFontSizes } from '@mui/material';
 import { ShoppingCartContextProvider } from './contexts/cart.context';
@@ -18,11 +17,9 @@ root.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<ThemeProvider theme={responsiveFontSizes(theme)}>
-				<CategoriesContextProvider>
-					<ShoppingCartContextProvider>
-						<App />
-					</ShoppingCartContextProvider>
-				</CategoriesContextProvider>
+				<ShoppingCartContextProvider>
+					<App />
+				</ShoppingCartContextProvider>
 			</ThemeProvider>
 		</BrowserRouter>
 	</Provider>
