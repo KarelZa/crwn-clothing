@@ -6,5 +6,5 @@ import { CATEGORY_ACTION_TYPES } from './category.types';
  * @param {User | null}  categoriesMap - categoriesMap object
  * @returns object with {type,action}
  */
-export const setCategories = (categoriesMap) =>
-	createAction(CATEGORY_ACTION_TYPES.SET_CATEGORIES_MAP, { categories: categoriesMap });
+export const setCategories = (categoriesArray) =>
+	createAction(CATEGORY_ACTION_TYPES.SET_CATEGORIES_ARRAY, { categories: categoriesArray });
