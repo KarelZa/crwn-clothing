@@ -25,7 +25,23 @@ interface ShoppingCartContextProps {
 	dispatch: React.Dispatch<any>;
 }
 
-export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined);
+export const ShoppingCartContext = createContext<ShoppingCartContextProps>({
+	isCartOpened: false,
+	discount: {
+		isActivated: false,
+		discountAmount: 0,
+	},
+	openDropDown: () => {},
+	cartItems: [],
+	addToCart: () => {},
+	removeFromCart: () => {},
+	decreaseItemQtyInCart: () => {},
+	activateDiscount: () => {},
+	cartItemsPrice: 0,
+	freeDeliveryThreshold: 1200,
+	cartItemsCount: 0,
+	dispatch: () => {},
+});
 
 /**
  * HELPER FCE -> Adds item into cart
@@ -246,12 +262,12 @@ const ShoppingCartContextProvider = ({ children }: Props) => {
 /**
  * Custom Hook for cart context API ( throws error if not used inside correct provider)
  */
-function useCartContext() {
-	const context = useContext(ShoppingCartContext);
-	if (context === undefined) {
-		throw new Error('useCartContext must be used within a ShoppingCartContextProvider');
-	}
-	return context;
-}
+// function useCartContext() {
+// 	const context = useContext(ShoppingCartContext);
+// 	if (context === undefined) {
+// 		throw new Error('useCartContext must be used within a ShoppingCartContextProvider');
+// 	}
+// 	return context;
+// }
 
-export { ShoppingCartContextProvider, useCartContext };
+export { ShoppingCartContextProvider };

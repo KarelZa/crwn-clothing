@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import CheckoutItem from '../../components/checkout-item/CheckoutItem';
-import { CART_ACTION_TYPES, useCartContext } from '../../contexts/cart.context';
+import { CART_ACTION_TYPES, ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledCheckout, StyledEmptyCheckout } from '../../styles/checkout/Checkout.styled';
 import CheckoutSidebar from '../../components/checkout-sidebar/CheckoutSidebar';
 import { StyledButton } from '../../styles/shared/button';
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-	const { cartItems, dispatch } = useCartContext();
+	const { cartItems, dispatch } = useContext(ShoppingCartContext);
 	let navigate = useNavigate();
 	const routeChangeHandler = () => {
 		let path = `/shop`;

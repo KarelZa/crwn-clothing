@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCartContext } from '../../contexts/cart.context';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledCartDropdown } from '../../styles/cart-dropdown/CartDropdown.styled';
 import { StyledButton } from '../../styles/shared/button';
 import CartItem from '../cart-item/CartItem';
@@ -10,7 +10,7 @@ import DeliveryWidget from '../delivery-widget/DeliveryWidget';
 type CartDropdownProps = {};
 
 const CartDropdown = (props: CartDropdownProps) => {
-	const { cartItems, cartItemsPrice } = useCartContext();
+	const { cartItems, cartItemsPrice } = useContext(ShoppingCartContext);
 	const navigate = useNavigate();
 
 	const goToCheckoutHandler = () => {

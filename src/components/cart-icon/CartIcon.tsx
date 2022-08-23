@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/shopping-bag.svg';
-import { useCartContext } from '../../contexts/cart.context';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledCartIcon } from '../../styles/cart-icon/CartIcon.styled';
 import { usePopupState, bindHover, bindPopper } from 'material-ui-popup-state/hooks';
 import Popper from '@mui/material/Popper';
@@ -11,7 +11,7 @@ import { Backdrop, Paper } from '@mui/material';
 interface cartIconProps {}
 
 const CartIcon = (props: cartIconProps) => {
-	const { cartItemsCount } = useCartContext();
+	const { cartItemsCount } = useContext(ShoppingCartContext);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const popupState = usePopupState({

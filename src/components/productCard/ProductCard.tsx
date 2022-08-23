@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
-import { useCartContext } from '../../contexts/cart.context';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 import Product from '../../model/product.model';
 import { StyledProductCard } from '../../styles/productCard/productCard';
 import { StyledButton } from '../../styles/shared/button';
@@ -11,7 +11,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
 	const { name, price, imageUrl } = product;
-	const { addToCart } = useCartContext();
+	const { addToCart } = useContext(ShoppingCartContext);
 
 	const addProductToCart = () => addToCart(product);
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import ICartItem from '../../model/cartItem.model';
 import { StyledCartItem } from '../../styles/cart-item/CartItem.styled';
-import { useCartContext } from '../../contexts/cart.context';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 
 interface CartItemProps {
 	cartItem: ICartItem;
@@ -10,7 +10,7 @@ interface CartItemProps {
 
 const CartItem = ({ cartItem }: CartItemProps) => {
 	const { name, price, quantity, imageUrl } = cartItem;
-	const { removeFromCart } = useCartContext();
+	const { removeFromCart } = useContext(ShoppingCartContext);
 
 	const removeCartItemHandler = () => removeFromCart(cartItem);
 

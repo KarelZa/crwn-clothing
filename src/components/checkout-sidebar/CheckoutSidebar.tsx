@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { useCartContext } from '../../contexts/cart.context';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledButton } from '../../styles/shared/button';
 import CustomInput from '../sign-up-form/CustomInput';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,8 @@ const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
 });
 
 const CheckoutSidebar = () => {
-	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } = useCartContext();
+	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } =
+		useContext(ShoppingCartContext);
 	const deliveryPrice = 89;
 
 	const { control, handleSubmit, reset } = useForm({

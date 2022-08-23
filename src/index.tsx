@@ -17,9 +17,9 @@ root.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<ThemeProvider theme={responsiveFontSizes(theme)}>
-				<ShoppingCartContextProvider>
-					<App />
-				</ShoppingCartContextProvider>
+				{/* <ShoppingCartContextProvider> */}
+				<App />
+				{/* </ShoppingCartContextProvider> */}
 			</ThemeProvider>
 		</BrowserRouter>
 	</Provider>

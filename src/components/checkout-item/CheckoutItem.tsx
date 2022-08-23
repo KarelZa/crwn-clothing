@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCartContext } from '../../contexts/cart.context';
+import React, { useContext } from 'react';
+import { ShoppingCartContext } from '../../contexts/cart.context';
 import CartItem from '../../model/cartItem.model';
 import Typography from '@mui/material/Typography';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
@@ -13,7 +13,7 @@ type CheckoutItemProps = {
 
 const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 	const { imageUrl, name, price, quantity } = checkoutItem;
-	const { addToCart, removeFromCart, decreaseItemQtyInCart } = useCartContext();
+	const { addToCart, removeFromCart, decreaseItemQtyInCart } = useContext(ShoppingCartContext);
 
 	const decreaseItemQtyHandler = () => decreaseItemQtyInCart(checkoutItem);
 	const increaseItemQtyHandler = () => addToCart(checkoutItem);
