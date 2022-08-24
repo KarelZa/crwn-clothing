@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
-import { ShoppingCartContext } from '../../contexts/cart.context';
 import Product from '../../model/product.model';
 import { StyledProductCard } from '../../styles/productCard/productCard';
 import { StyledButton } from '../../styles/shared/button';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cart/cart.action';
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
 
 interface ProductCardProps {
 	product: Product;
@@ -11,9 +14,9 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
 	const { name, price, imageUrl } = product;
-	const { addToCart } = useContext(ShoppingCartContext);
-
-	const addProductToCart = () => addToCart(product);
+	const dispatch = useDispatch();
+	const cartItems = useSelector(selectCartItems);
+	const addProductToCart = () => dispatch(addToCart(cartItems, product));
 
 	return (
 		<StyledProductCard>

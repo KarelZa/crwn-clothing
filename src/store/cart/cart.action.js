@@ -2,37 +2,51 @@ import { createAction } from '../../utils/reducer/reducer.utils';
 import { CART_ACTION_TYPES } from './cart.types';
 
 /**
- * * Action -> Toggler for visibility of the cart dropdown --> not used yet
+ * * Action fce -> Toggler for visibility of the cart dropdown --> not used yet
  */
 export const openDropDown = (bool) => {
 	createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool);
 };
 
 /**
+ * * Action fce -> Activates discount for items inside cart
+ * @param {boolean}  bool - false/true to deactivate/activate discount
+ * @param {number}  value - value of the discount
+ */
+export const activateDiscount = (bool, value) =>
+	createAction(CART_ACTION_TYPES.SET_DISCOUNT, {
+		isActivated: bool,
+		discountAmount: value,
+	});
+
+/**
  * Adds item into cart
+ * @param {CartItem[]}  cartItems - array of cart items
  * @param {Product}  productToAdd - product to be added
  */
 export const addToCart = (cartItems, productToAdd) => {
 	const newCartItems = addCartItem(cartItems, productToAdd);
-	createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+	return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
 /**
  * Decreases qty of item inside cart
+ * @param {CartItem[]}  cartItems - array of cart items
  * @param {Product}  cartItemToDecrease - product to be decreased
  */
-const decreaseItemQtyInCart = (cartItems, cartItemToDecrease) => {
+export const decreaseItemQtyInCart = (cartItems, cartItemToDecrease) => {
 	const newCartItems = decreaseCartItem(cartItems, cartItemToDecrease);
-	createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+	return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
 /**
  * Removes item from cart
+ * @param {CartItem[]}  cartItems - array of cart items
  * @param {Product}  cartItemToRemove - product to be removed from cart
  */
 export const removeFromCart = (cartItems, cartItemToRemove) => {
 	const newCartItems = clearCartItem(cartItems, cartItemToRemove);
-	createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+	return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
 /**
@@ -40,7 +54,7 @@ export const removeFromCart = (cartItems, cartItemToRemove) => {
  * @param {CartItem[]}  cartItems - array of items
  * @param {Product}  productToAdd - product to be added into cart
  */
-export const addCartItem = (cartItems, productToAdd) => {
+const addCartItem = (cartItems, productToAdd) => {
 	const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
 	if (existingCartItem) {

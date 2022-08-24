@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Divider from '@mui/material/Divider';
@@ -10,6 +10,10 @@ import { useForm } from 'react-hook-form';
 import { StyledSidebar } from '../../styles/checkout-sidebar/CheckoutSidebar.styled';
 import DeliveryWidget from '../delivery-widget/DeliveryWidget';
 import { StyledForm } from '../../styles/sign-up-form/signUpForm';
+import { useDispatch } from 'react-redux';
+import { activateDiscount } from '../../store/cart/cart.action';
+import { useSelector } from 'react-redux';
+import { selectCartItems, selectDiscount } from '../../store/cart/cart.selector';
 interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
 }
@@ -20,8 +24,10 @@ const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
 });
 
 const CheckoutSidebar = () => {
-	const { activateDiscount, discount, cartItemsPrice, freeDeliveryThreshold } =
-		useContext(ShoppingCartContext);
+	const dispatch = useDispatch();
+	const discount = useSelector(selectDiscount);
+	const cartItems = useSelector(selectCartItems);
+	const { cartItemsPrice, freeDeliveryThreshold } = useContext(ShoppingCartContext);
 	const deliveryPrice = 89;
 
 	const { control, handleSubmit, reset } = useForm({
@@ -31,10 +37,10 @@ const CheckoutSidebar = () => {
 
 	const formSubmitHandler = (data: CheckoutSidebarProps) => {
 		if (data.discountCode === '#today15') {
-			activateDiscount(!discount.isActivated, 0.85);
+			dispatch(activateDiscount(!discount.isActivated, 0.85));
 			reset();
 		} else if (data.discountCode === '#today20') {
-			activateDiscount(!discount.isActivated, 0.8);
+			dispatch(activateDiscount(!discount.isActivated, 0.8));
 			reset();
 		}
 	};
@@ -53,7 +59,7 @@ const CheckoutSidebar = () => {
 								component={'span'}
 								variant='button'
 								fontWeight={800}
-								onClick={() => activateDiscount(!discount.isActivated, 0)}
+								onClick={() => dispatch(activateDiscount(!discount.isActivated, 0))}
 							>
 								&#10006;
 							</Typography>

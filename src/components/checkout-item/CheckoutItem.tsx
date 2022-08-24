@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
-import { ShoppingCartContext } from '../../contexts/cart.context';
+import React from 'react';
 import CartItem from '../../model/cartItem.model';
 import Typography from '@mui/material/Typography';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { CgTrashEmpty } from 'react-icons/cg';
 import { StyledCheckoutItem } from '../../styles/checkout-item/CheckoutItem.styled';
+import { addToCart, decreaseItemQtyInCart, removeFromCart } from '../../store/cart/cart.action';
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import { useDispatch } from 'react-redux';
 
 type CheckoutItemProps = {
 	checkoutItem: CartItem;
@@ -13,11 +16,11 @@ type CheckoutItemProps = {
 
 const CheckoutItem = ({ checkoutItem }: CheckoutItemProps) => {
 	const { imageUrl, name, price, quantity } = checkoutItem;
-	const { addToCart, removeFromCart, decreaseItemQtyInCart } = useContext(ShoppingCartContext);
-
-	const decreaseItemQtyHandler = () => decreaseItemQtyInCart(checkoutItem);
-	const increaseItemQtyHandler = () => addToCart(checkoutItem);
-	const removeItemHandler = () => removeFromCart(checkoutItem);
+	const dispatch = useDispatch();
+	const cartItems = useSelector(selectCartItems);
+	const decreaseItemQtyHandler = () => dispatch(decreaseItemQtyInCart(cartItems, checkoutItem));
+	const increaseItemQtyHandler = () => dispatch(addToCart(cartItems, checkoutItem));
+	const removeItemHandler = () => dispatch(removeFromCart(cartItems, checkoutItem));
 
 	return (
 		<StyledCheckoutItem>

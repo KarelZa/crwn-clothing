@@ -1,8 +1,34 @@
 import { createSelector } from 'reselect';
 
-const countOfItemsReducer = (state) => state.cart;
+// basic input selector of cart slice
+const selectCartReducer = (state) => state.cart;
 
-export const selectCountOfItems =
-	([countOfItemsReducer], (cartItemsSlice) => cartItemsSlice.cartItems);
+// selector of cartItems array
+export const selectCartItems = createSelector([selectCartReducer], (cart) => cart.cartItems);
 
-const countOfItems = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+// selector of cart isOpened
+export const selectIsCartOpen = createSelector([selectCartReducer], (cart) => cart.isCartOpened);
+
+export const selectDiscount = createSelector([selectCartReducer], (cart) => cart.discount);
+
+export const selectCountOfItems = createSelector([selectCartItems], (cartItems) => {
+	return cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+});
+
+// /**
+//  * * REDUCER FCE -> Calculates total price of items inside cart
+//  */
+// const calcCartItemsPrice = useCallback(() => {
+// 	const productsPrice = discount?.isActivated
+// 		? (
+// 				cartItems.reduce(
+// 					(accu: number, curr: CartItem) => accu + curr.price * curr.quantity,
+// 					0
+// 				) * discount.discountAmount
+// 		  ).toFixed()
+// 		: cartItems.reduce((accu: number, curr: CartItem) => accu + curr.price * curr.quantity, 0);
+
+// 	dispatch(
+// 		createAction(CART_ACTION_TYPES.SET_CART_ITEMS_PRICE, { cartItemsPrice: productsPrice })
+// 	);
+// }, [cartItems, discount]);

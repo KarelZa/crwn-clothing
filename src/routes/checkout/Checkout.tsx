@@ -6,28 +6,34 @@ import { StyledCheckout, StyledEmptyCheckout } from '../../styles/checkout/Check
 import CheckoutSidebar from '../../components/checkout-sidebar/CheckoutSidebar';
 import { StyledButton } from '../../styles/shared/button';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import CartItem from '../../model/cartItem.model';
+import { useDispatch } from 'react-redux';
 
 const Checkout = () => {
-	const { cartItems, dispatch } = useContext(ShoppingCartContext);
+	const { dispatch } = useContext(ShoppingCartContext);
+	const cartItems: CartItem[] = useSelector(selectCartItems);
+
 	let navigate = useNavigate();
 	const routeChangeHandler = () => {
 		let path = `/shop`;
 		navigate(path);
 	};
 
-	useEffect(() => {
-		return () => {
-			if (cartItems.length === 0) {
-				dispatch({
-					type: CART_ACTION_TYPES.SET_DISCOUNT,
-					payload: {
-						isActivated: false,
-						discountAmount: 0,
-					},
-				});
-			}
-		};
-	}, [cartItems.length, dispatch]);
+	// useEffect(() => {
+	// 	return () => {
+	// 		if (cartItems.length === 0) {
+	// 			dispatch({
+	// 				type: CART_ACTION_TYPES.SET_DISCOUNT,
+	// 				payload: {
+	// 					isActivated: false,
+	// 					discountAmount: 0,
+	// 				},
+	// 			});
+	// 		}
+	// 	};
+	// }, [cartItems.length, dispatch]);
 
 	return (
 		<>

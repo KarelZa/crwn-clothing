@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/shopping-bag.svg';
-import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledCartIcon } from '../../styles/cart-icon/CartIcon.styled';
 import { usePopupState, bindHover, bindPopper } from 'material-ui-popup-state/hooks';
 import Popper from '@mui/material/Popper';
@@ -8,10 +7,12 @@ import CartDropdown from '../cart-dropdown/CartDropdown';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Fade from '@mui/material/Fade';
 import { Backdrop, Paper } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectCountOfItems } from '../../store/cart/cart.selector';
 interface cartIconProps {}
 
 const CartIcon = (props: cartIconProps) => {
-	const { cartItemsCount } = useContext(ShoppingCartContext);
+	const cartItemsCount = useSelector(selectCountOfItems);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const popupState = usePopupState({
