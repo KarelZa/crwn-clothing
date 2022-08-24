@@ -8,7 +8,6 @@ import { ThemeProvider } from '@mui/system';
 import { theme } from './styles/appTheme/theme';
 import { Provider } from 'react-redux';
 import { responsiveFontSizes } from '@mui/material';
-import { ShoppingCartContextProvider } from './contexts/cart.context';
 import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -17,9 +16,7 @@ root.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<ThemeProvider theme={responsiveFontSizes(theme)}>
-				{/* <ShoppingCartContextProvider> */}
 				<App />
-				{/* </ShoppingCartContextProvider> */}
 			</ThemeProvider>
 		</BrowserRouter>
 	</Provider>

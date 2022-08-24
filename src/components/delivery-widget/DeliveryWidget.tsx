@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import { TbTruckDelivery } from 'react-icons/tb';
-import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledDeliveryWidget } from '../../styles/delivery-widget/DeliveryWidget.styled';
+import { useSelector } from 'react-redux';
+import { selectCartItemsPrice, selectFreeDeliveryAmount } from '../../store/cart/cart.selector';
 
 type DeliveryWidgetProps = {};
 
 const DeliveryWidget = (props: DeliveryWidgetProps) => {
-	const { cartItemsPrice, freeDeliveryThreshold } = useContext(ShoppingCartContext);
+	const cartItemsPrice = useSelector(selectCartItemsPrice);
+	const freeDeliveryThreshold = useSelector(selectFreeDeliveryAmount);
 	let barFillWidth = '0%'; // for bar filling width
 	if (cartItemsPrice > 0) {
 		barFillWidth = Math.round((cartItemsPrice / 1200) * 100) + '%'; // Calculation of the filling

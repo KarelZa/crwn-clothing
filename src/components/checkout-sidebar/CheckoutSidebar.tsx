@@ -3,7 +3,6 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledButton } from '../../styles/shared/button';
 import CustomInput from '../sign-up-form/CustomInput';
 import { useForm } from 'react-hook-form';
@@ -13,7 +12,11 @@ import { StyledForm } from '../../styles/sign-up-form/signUpForm';
 import { useDispatch } from 'react-redux';
 import { activateDiscount } from '../../store/cart/cart.action';
 import { useSelector } from 'react-redux';
-import { selectCartItems, selectDiscount } from '../../store/cart/cart.selector';
+import {
+	selectCartItemsPrice,
+	selectDiscount,
+	selectFreeDeliveryAmount,
+} from '../../store/cart/cart.selector';
 interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
 }
@@ -26,8 +29,8 @@ const schema: yup.SchemaOf<CheckoutSidebarProps> = yup.object({
 const CheckoutSidebar = () => {
 	const dispatch = useDispatch();
 	const discount = useSelector(selectDiscount);
-	const cartItems = useSelector(selectCartItems);
-	const { cartItemsPrice, freeDeliveryThreshold } = useContext(ShoppingCartContext);
+	const cartItemsPrice = useSelector(selectCartItemsPrice);
+	const freeDeliveryThreshold = useSelector(selectFreeDeliveryAmount);
 	const deliveryPrice = 89;
 
 	const { control, handleSubmit, reset } = useForm({

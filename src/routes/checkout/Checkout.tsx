@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import CheckoutItem from '../../components/checkout-item/CheckoutItem';
-import { CART_ACTION_TYPES, ShoppingCartContext } from '../../contexts/cart.context';
 import { StyledCheckout, StyledEmptyCheckout } from '../../styles/checkout/Checkout.styled';
 import CheckoutSidebar from '../../components/checkout-sidebar/CheckoutSidebar';
 import { StyledButton } from '../../styles/shared/button';
@@ -10,9 +9,10 @@ import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import CartItem from '../../model/cartItem.model';
 import { useDispatch } from 'react-redux';
+import { activateDiscount } from '../../store/cart/cart.action';
 
 const Checkout = () => {
-	const { dispatch } = useContext(ShoppingCartContext);
+	const dispatch = useDispatch();
 	const cartItems: CartItem[] = useSelector(selectCartItems);
 
 	let navigate = useNavigate();
@@ -21,19 +21,13 @@ const Checkout = () => {
 		navigate(path);
 	};
 
-	// useEffect(() => {
-	// 	return () => {
-	// 		if (cartItems.length === 0) {
-	// 			dispatch({
-	// 				type: CART_ACTION_TYPES.SET_DISCOUNT,
-	// 				payload: {
-	// 					isActivated: false,
-	// 					discountAmount: 0,
-	// 				},
-	// 			});
-	// 		}
-	// 	};
-	// }, [cartItems.length, dispatch]);
+	useEffect(() => {
+		return () => {
+			if (cartItems.length === 0) {
+				dispatch(activateDiscount(false, 0));
+			}
+		};
+	}, [cartItems.length, dispatch]);
 
 	return (
 		<>
