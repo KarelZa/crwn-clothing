@@ -3,16 +3,21 @@ import { rootReducer } from './root-reducer';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
 
 // Logger adds extra functionality to dispatch method -> catch action before hits the store and log out the state
-const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);
+const middleWares = [
+	,
+	// process.env.NODE_ENV !== 'production' && logger
+	thunk,
+].filter(Boolean);
 const composeEnhancer =
 	compose(
 		process.env.NODE_ENV !== 'production' &&
 			window &&
 			window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 	) || compose;
-
+// composed with redux devtools extension
 const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 const persistConfig = {
