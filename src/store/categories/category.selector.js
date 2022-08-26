@@ -24,3 +24,8 @@ export const selectCategories = createSelector([selectCategoriesArray], (categor
 		return acc;
 	}, {});
 });
+
+export const selectCategoryIsLoading = createSelector(
+	[selectCategoryInputReducer],
+	(categories) => categories.isLoading
+);

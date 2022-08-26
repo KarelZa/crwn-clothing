@@ -19,7 +19,7 @@ export const StyledGridContainer = styled('div', {
 	}, 1fr))`,
 	rowGap: otherProps.rowGap || '0',
 	columnGap: otherProps.colGap || '0',
-	gridTemplateRows: `repeat(auto, 300px)`,
+	// gridTemplateRows: `repeat(auto, 300px)`,
 
 	[theme.breakpoints.up('sm')]: {},
 	[theme.breakpoints.up('md')]: {},

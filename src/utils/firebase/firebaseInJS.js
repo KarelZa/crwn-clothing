@@ -68,6 +68,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 export const getCategoriesAndDocuments = async () => {
 	const collectionRef = collection(db, 'categories'); // referencing
 	const q = query(collectionRef); // have to query collection Ref
+	// await Promise.reject(new Error('new error Woops!'));
 	const querySnapshot = await getDocs(q); // executes query and return result in form of promise
 
 	return querySnapshot.docs.map((docSnapshot) => docSnapshot.data()); // returning data

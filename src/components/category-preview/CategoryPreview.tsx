@@ -9,9 +9,10 @@ import Divider from '@mui/material/Divider';
 type CategoryPreviewProps = {
 	title: string;
 	products: Product[];
+	isLoading: boolean;
 };
 
-const CategoryPreview = ({ title, products }: CategoryPreviewProps) => {
+const CategoryPreview = ({ title, products, isLoading }: CategoryPreviewProps) => {
 	return (
 		<div>
 			<div
@@ -36,7 +37,7 @@ const CategoryPreview = ({ title, products }: CategoryPreviewProps) => {
 				{products
 					.filter((_, index) => index < 4)
 					.map((product) => (
-						<ProductCard key={product.id} product={product} />
+						<ProductCard key={product.id} product={product} isLoading={isLoading} />
 					))}
 			</StyledGridContainer>
 		</div>
