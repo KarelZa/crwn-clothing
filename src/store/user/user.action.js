@@ -8,3 +8,5 @@ import { USER_ACTION_TYPES } from './user.types';
  */
 export const setCurrentUser = (user) =>
 	createAction(USER_ACTION_TYPES.SET_CURRENT_USER, { currentUser: user });
+
+export const checkUserSession = () => createAction(USER_ACTION_TYPES.CHECK_USER_SESSION);
