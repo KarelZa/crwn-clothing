@@ -1,16 +1,17 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './root-reducer';
-import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
+import { rootSaga } from './root-saga';
+import createSagaMiddleware from '@redux-saga/core';
+import logger from 'redux-logger'; // Logger adds extra functionality to dispatch method -> catch action before hits the store and log out the state
 
-// Logger adds extra functionality to dispatch method -> catch action before hits the store and log out the state
-const middleWares = [
-	,
-	// process.env.NODE_ENV !== 'production' && logger
-	thunk,
-].filter(Boolean);
+// MiddleWares
+const sagaMiddleware = createSagaMiddleware();
+
+const middleWares = [process.env.NODE_ENV !== 'production' && logger, sagaMiddleware].filter(
+	Boolean
+);
 const composeEnhancer =
 	compose(
 		process.env.NODE_ENV !== 'production' &&
@@ -28,4 +29,5 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
+sagaMiddleware.run(rootSaga);
 export const persistor = persistStore(store); // persisting store
