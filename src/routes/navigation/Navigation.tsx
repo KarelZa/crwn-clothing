@@ -7,11 +7,17 @@ import { StyledNavigation } from '../../styles/navigation/Navigation.styled';
 import { signOutCurrentUser } from '../../utils/firebase/firebase';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../store/user/user.selector';
+import { useDispatch } from 'react-redux';
+import { signOutStart } from '../../store/user/user.action';
 
 type NavigationProps = {};
 
 const Navigation = (props: NavigationProps) => {
+	const dispatch = useDispatch();
 	const currentUser = useSelector(selectCurrentUser);
+
+	const onSignOutClickHandler = () => dispatch(signOutStart());
+
 	return (
 		<>
 			<StyledNavigation>
@@ -23,7 +29,7 @@ const Navigation = (props: NavigationProps) => {
 						<Link to='/shop'>Shop</Link>
 					</Typography>
 					{currentUser ? (
-						<Typography variant='h6' onClick={signOutCurrentUser} component={'span'}>
+						<Typography variant='h6' onClick={onSignOutClickHandler} component={'span'}>
 							Sign Out
 						</Typography>
 					) : (

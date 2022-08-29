@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebaseInJS';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomInput from './CustomInput';
 import { StyledContainer } from '../../styles/sign-up-form/signUpContainer';
 import { StyledButton } from '../../styles/shared/button';
 import { StyledForm } from '../../styles/sign-up-form/signUpForm';
+import { useDispatch } from 'react-redux';
+import { signUpStart } from '../../store/user/user.action';
 
 export interface SignUpFormProps {
 	displayName: string;
@@ -26,6 +27,7 @@ const schema: yup.SchemaOf<SignUpFormProps> = yup.object({
 });
 
 const SignUpForm = () => {
+	const dispatch = useDispatch();
 	const { control, handleSubmit, reset } = useForm<SignUpFormProps>({
 		resolver: yupResolver(schema),
 	});
@@ -37,7 +39,8 @@ const SignUpForm = () => {
 		}
 
 		try {
-			await createAuthUserWithEmailAndPassword(data.email, data.password, data.displayName);
+			// await createAuthUserWithEmailAndPassword(data.email, data.password, data.displayName);
+			dispatch(signUpStart(data.email, data.password, data.displayName));
 			reset();
 		} catch (error: any) {
 			if (error.code === 'auth/email-already-in-use') {

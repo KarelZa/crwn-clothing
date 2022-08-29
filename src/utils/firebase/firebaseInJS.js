@@ -81,27 +81,37 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 export const createUserDocFromAuth = async (userAuth, additionalInformation = {}) => {
 	if (!userAuth) return;
 	const userDocRef = doc(db, 'users', userAuth.uid); // reference of user's doc based on uid
-	const userSnapshot = await getDoc(userDocRef); // getting data from document of users
+	let userSnapshot = await getDoc(userDocRef); // getting data from document of users
 
 	// if user's doc does not exists
 	if (!userSnapshot.exists()) {
 		const { displayName, email } = userAuth; // getting nickname + email
 		const createdAt = new Date(); // date of creation
 		try {
-			await setDoc(userDocRef, { displayName, email, createdAt });
+			await setDoc(userDocRef, {
+				displayName,
+				email,
+				createdAt,
+				...additionalInformation,
+			});
+			userSnapshot = getDoc(userDocRef); // updating with newly created user's details
 		} catch (error) {
 			if (error instanceof Error) {
 				console.log('❌ Error creating the user', error.message);
 			}
 		}
 	}
-	return userDocRef;
+
+	return userSnapshot;
 };
 // create user account with Email & Password
-export const createAuthUserWithEmailAndPassword = async (email, password, userName) => {
-	const res = await createUserWithEmailAndPassword(auth, email, password);
-	const user = res.user;
-	return await updateProfile(user, { displayName: userName }); // updates profile with given userName
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+	if (!email || !password) return;
+
+	return await createUserWithEmailAndPassword(auth, email, password);
+	// const res = await createUserWithEmailAndPassword(auth, email, password);
+	// const user = res.user;
+	// return await updateProfile(user, { displayName: userName }); // updates profile with given userName
 };
 // log-in user account with Email & Password
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
@@ -116,6 +126,7 @@ export const onAuthStateChangedListener = (callback) => {
 	onAuthStateChanged(auth, callback);
 };
 
+// for Redux Saga - rework of AuthChangeListener to get current User
 export const getCurrentUser = () => {
 	return new Promise((resolve, reject) => {
 		const unsubscribe = onAuthStateChanged(

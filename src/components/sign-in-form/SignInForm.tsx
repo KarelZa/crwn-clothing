@@ -10,6 +10,8 @@ import {
 } from '../../utils/firebase/firebaseInJS';
 import { StyledFlexContainer } from '../../styles/shared/flexContainer';
 import { StyledForm } from '../../styles/sign-up-form/signUpForm';
+import { useDispatch } from 'react-redux';
+import { emailSignInStart, googleSignInStart } from '../../store/user/user.action';
 
 export interface SignInFormProps {
 	email: string;
@@ -23,17 +25,20 @@ const schema: yup.SchemaOf<SignInFormProps> = yup.object({
 });
 
 const SignInForm = () => {
+	const dispatch = useDispatch();
 	const { control, handleSubmit, reset } = useForm<SignInFormProps>({
 		resolver: yupResolver(schema),
 	});
 
 	const logGoogleUser = async () => {
-		await signInWithGooglePopup();
+		// await signInWithGooglePopup();
+		dispatch(googleSignInStart());
 	};
 
 	const formSubmitHandler = async (data: SignInFormProps) => {
 		try {
-			const { user } = await signInAuthUserWithEmailAndPassword(data.email, data.password);
+			// const { user } = await signInAuthUserWithEmailAndPassword(data.email, data.password);
+			dispatch(emailSignInStart(data.email, data.password));
 			reset();
 		} catch (error: any) {
 			if (error.code === 'auth/wrong-password') {
