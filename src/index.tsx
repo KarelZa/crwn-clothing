@@ -7,9 +7,11 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/system';
+import ThemeProvider from '@mui/system/ThemeProvider';
 import { theme } from './styles/appTheme/theme';
-import { responsiveFontSizes, Skeleton } from '@mui/material';
+import responsiveFontSizes from '@mui/material/styles/responsiveFontSizes';
+import { Elements } from '@stripe/react-stripe-js';
+import { striplePromise } from './utils/stripe/stripe.utils';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,9 +19,11 @@ root.render(
 	<Provider store={store}>
 		<PersistGate persistor={persistor}>
 			<BrowserRouter>
-				<ThemeProvider theme={responsiveFontSizes(theme)}>
-					<App />
-				</ThemeProvider>
+				<Elements stripe={striplePromise}>
+					<ThemeProvider theme={responsiveFontSizes(theme)}>
+						<App />
+					</ThemeProvider>
+				</Elements>
 			</BrowserRouter>
 		</PersistGate>
 	</Provider>

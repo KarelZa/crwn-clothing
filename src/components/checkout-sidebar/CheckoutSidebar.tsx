@@ -17,6 +17,8 @@ import {
 	selectDiscount,
 	selectFreeDeliveryAmount,
 } from '../../store/cart/cart.selector';
+import PaymentForm from '../payment-form/PaymentForm';
+
 interface CheckoutSidebarProps {
 	discountCode?: string | undefined;
 }
@@ -125,6 +127,7 @@ const CheckoutSidebar = () => {
 						</Typography>
 					</div>
 				</div>
+				<PaymentForm />
 			</div>
 		</StyledSidebar>
 	);
