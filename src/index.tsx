@@ -15,19 +15,19 @@ import { striplePromise } from './utils/stripe/stripe.utils';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-	// <React.StrictMode>
-	<Provider store={store}>
-		<PersistGate persistor={persistor}>
-			<BrowserRouter>
-				<Elements stripe={striplePromise}>
-					<ThemeProvider theme={responsiveFontSizes(theme)}>
-						<App />
-					</ThemeProvider>
-				</Elements>
-			</BrowserRouter>
-		</PersistGate>
-	</Provider>
-	// </React.StrictMode>
+	<React.StrictMode>
+		<Provider store={store}>
+			<PersistGate persistor={persistor}>
+				<BrowserRouter>
+					<Elements stripe={striplePromise}>
+						<ThemeProvider theme={responsiveFontSizes(theme)}>
+							<App />
+						</ThemeProvider>
+					</Elements>
+				</BrowserRouter>
+			</PersistGate>
+		</Provider>
+	</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

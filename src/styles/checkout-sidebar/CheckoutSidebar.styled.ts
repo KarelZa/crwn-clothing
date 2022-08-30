@@ -12,7 +12,6 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 			'& form': {
 				marginTop: '0',
 				display: 'flex',
-				// flexDirection: 'column',
 				gap: '1rem',
 				'& .MuiButton-root': {
 					height: '2.7rem',
@@ -54,7 +53,7 @@ export const StyledSidebar = styled('div')<StyledSidebarProps>(({ theme }) => ({
 		gridColumn: '2 / 3',
 		position: 'sticky',
 		top: 0,
-		height: '100vh',
+		height: '75vh',
 
 		'& .sticky-wrapper': {
 			border: '1px solid #d1d1d1',

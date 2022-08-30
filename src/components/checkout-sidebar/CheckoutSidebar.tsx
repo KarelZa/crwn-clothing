@@ -72,7 +72,7 @@ const CheckoutSidebar = () => {
 					) : (
 						<>
 							<Typography component={'h6'} variant='overline'>
-								Gift / Discount Code
+								<strong>Gift / Discount Code</strong>
 							</Typography>
 							<StyledForm onSubmit={handleSubmit(formSubmitHandler)}>
 								<CustomInput
