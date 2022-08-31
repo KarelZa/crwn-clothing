@@ -33,7 +33,7 @@ const Checkout = () => {
 			<Route index element={<CheckoutPreview />} />
 			<Route path=':contact-payment' element={<ContactPayment />} />
 			<Route path='successful-order' element={<SuccessfulOrder />} />
-			{/* <Route path='failed-order' element={<SuccessfulOrder />} /> */}
+			<Route path='failed-order' element={<SuccessfulOrder />} />
 		</Routes>
 	);
 
