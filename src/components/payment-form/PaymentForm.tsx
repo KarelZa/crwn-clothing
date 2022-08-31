@@ -51,13 +51,21 @@ const PaymentForm = (props: Props) => {
 		console.log(paymentResult);
 		setIsPaymentProcessing(false);
 		if (paymentResult.error) {
-			alert(paymentResult.error.message);
+			// alert(paymentResult.error.message);
+			navigate('failed-order', {
+				state: {
+					status: 'failed',
+					userName: user?.displayName ?? 'Guest',
+					errorMessage: paymentResult.error.message,
+				},
+				replace: false,
+			});
 		} else {
 			if (paymentResult.paymentIntent.status === 'succeeded') {
 				// alert('Payment Successful');
 				navigate('successful-order', {
-					state: { userName: user?.displayName ?? 'Guest' },
-					replace: false,
+					state: { status: 'succeeded', userName: user?.displayName ?? 'Guest' },
+					replace: true,
 				});
 			}
 		}
